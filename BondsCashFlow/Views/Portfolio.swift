@@ -45,7 +45,7 @@ struct Portfolio: View {
                 ActionSheet(title: Text("Добавить"),
                             //                            message: Text(""),
                     buttons: [
-                        .cancel(),
+                        .cancel(Text("Отмена")),
                         .default(Text("Добавить позицию в портфель"),
                                  action: {
                                     self.modal = .addPosition
@@ -62,7 +62,6 @@ struct Portfolio: View {
             })
             
             .sheet(isPresented: $showModal, content: {
-                
                 if self.modal == .addPortfolio { AddPortfolio() }
                 
                 if self.modal == .addPosition { AddPosition() }

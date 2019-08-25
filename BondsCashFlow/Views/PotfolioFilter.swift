@@ -42,7 +42,7 @@ struct PotfolioFilter: View {
                     //  MARK: - add actions
                     self.presentation.wrappedValue.dismiss()
                 }) {
-                    Text("Done")
+                    Text("Закрыть")
             })
         }
     }

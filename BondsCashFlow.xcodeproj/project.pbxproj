@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A45EB5E2312A77500DC7B28 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A45EB5D2312A77500DC7B28 /* Settings.swift */; };
+		2A45EB602312A9AA00DC7B28 /* CbondLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A45EB5F2312A9AA00DC7B28 /* CbondLogin.swift */; };
+		2A6EC88C2312BB1A00A62B23 /* Catalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6EC88B2312BB1A00A62B23 /* Catalogue.swift */; };
+		2A6EC88E2312C0D700A62B23 /* Extension+Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6EC88D2312C0D700A62B23 /* Extension+Array.swift */; };
+		2A6EC8902312C0F900A62B23 /* Extension+FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6EC88F2312C0F900A62B23 /* Extension+FileManager.swift */; };
+		2A6EC8932312C15100A62B23 /* Extension+DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6EC8922312C15100A62B23 /* Extension+DateFormatter.swift */; };
+		2A6EC8952312C17A00A62B23 /* CBondEmission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6EC8942312C17A00A62B23 /* CBondEmission.swift */; };
+		2A6EC8972312C1A600A62B23 /* CBondFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6EC8962312C1A600A62B23 /* CBondFlow.swift */; };
+		2A6EC8992312C1C600A62B23 /* CBondMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6EC8982312C1C600A62B23 /* CBondMeta.swift */; };
+		2A6EC89C2312C24700A62B23 /* readJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6EC89B2312C24700A62B23 /* readJSON.swift */; };
+		2A6EC89E2312C2C000A62B23 /* CashFlowStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6EC89D2312C2C000A62B23 /* CashFlowStructure.swift */; };
+		2A6EC8A02312C35500A62B23 /* cbondRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6EC89F2312C35500A62B23 /* cbondRequest.swift */; };
 		2A772C672311E47500ABF2C3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A772C662311E47500ABF2C3 /* AppDelegate.swift */; };
 		2A772C692311E47500ABF2C3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A772C682311E47500ABF2C3 /* SceneDelegate.swift */; };
 		2A772C6D2311E47500ABF2C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A772C6C2311E47500ABF2C3 /* Assets.xcassets */; };
@@ -44,9 +56,22 @@
 		2A772CBD2311E64A00ABF2C3 /* AddIssue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A772CB62311E64A00ABF2C3 /* AddIssue.swift */; };
 		2A772CBE2311E64A00ABF2C3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A772CB72311E64A00ABF2C3 /* ContentView.swift */; };
 		2A772CBF2311E64A00ABF2C3 /* PotfolioFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A772CB82311E64A00ABF2C3 /* PotfolioFilter.swift */; };
+		2AFA835A2313082000A30A28 /* EmissionStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFA83592313082000A30A28 /* EmissionStructure.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A45EB5D2312A77500DC7B28 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		2A45EB5F2312A9AA00DC7B28 /* CbondLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CbondLogin.swift; sourceTree = "<group>"; };
+		2A6EC88B2312BB1A00A62B23 /* Catalogue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Catalogue.swift; sourceTree = "<group>"; };
+		2A6EC88D2312C0D700A62B23 /* Extension+Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Array.swift"; sourceTree = "<group>"; };
+		2A6EC88F2312C0F900A62B23 /* Extension+FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+FileManager.swift"; sourceTree = "<group>"; };
+		2A6EC8922312C15100A62B23 /* Extension+DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+DateFormatter.swift"; sourceTree = "<group>"; };
+		2A6EC8942312C17A00A62B23 /* CBondEmission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBondEmission.swift; sourceTree = "<group>"; };
+		2A6EC8962312C1A600A62B23 /* CBondFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBondFlow.swift; sourceTree = "<group>"; };
+		2A6EC8982312C1C600A62B23 /* CBondMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBondMeta.swift; sourceTree = "<group>"; };
+		2A6EC89B2312C24700A62B23 /* readJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = readJSON.swift; sourceTree = "<group>"; };
+		2A6EC89D2312C2C000A62B23 /* CashFlowStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CashFlowStructure.swift; sourceTree = "<group>"; };
+		2A6EC89F2312C35500A62B23 /* cbondRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cbondRequest.swift; sourceTree = "<group>"; };
 		2A772C632311E47500ABF2C3 /* BondsCashFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BondsCashFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A772C662311E47500ABF2C3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A772C682311E47500ABF2C3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +111,7 @@
 		2A772CB62311E64A00ABF2C3 /* AddIssue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddIssue.swift; sourceTree = "<group>"; };
 		2A772CB72311E64A00ABF2C3 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2A772CB82311E64A00ABF2C3 /* PotfolioFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PotfolioFilter.swift; sourceTree = "<group>"; };
+		2AFA83592313082000A30A28 /* EmissionStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmissionStructure.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +125,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2A6EC8912312C11500A62B23 /* Cbond Stuff */ = {
+			isa = PBXGroup;
+			children = (
+				2A6EC8922312C15100A62B23 /* Extension+DateFormatter.swift */,
+				2A6EC8942312C17A00A62B23 /* CBondEmission.swift */,
+				2A6EC8962312C1A600A62B23 /* CBondFlow.swift */,
+				2A6EC8982312C1C600A62B23 /* CBondMeta.swift */,
+				2A6EC89F2312C35500A62B23 /* cbondRequest.swift */,
+				2A6EC89D2312C2C000A62B23 /* CashFlowStructure.swift */,
+				2AFA83592313082000A30A28 /* EmissionStructure.swift */,
+			);
+			path = "Cbond Stuff";
+			sourceTree = "<group>";
+		};
+		2A6EC89A2312C22A00A62B23 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				2A6EC89B2312C24700A62B23 /* readJSON.swift */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
 		2A772C5A2311E47500ABF2C3 = {
 			isa = PBXGroup;
 			children = (
@@ -120,9 +168,10 @@
 			children = (
 				2A772CA22311E51000ABF2C3 /* BondCashFlow */,
 				2A772CA32311E59800ABF2C3 /* Extensions */,
-				2A772CAE2311E61500ABF2C3 /* SaveDoneCancelButtons.swift */,
 				2A772CB12311E63300ABF2C3 /* Supporting Views */,
 				2A772CB02311E62C00ABF2C3 /* Views */,
+				2A6EC89A2312C22A00A62B23 /* JSON */,
+				2A6EC8912312C11500A62B23 /* Cbond Stuff */,
 				2A772CB72311E64A00ABF2C3 /* ContentView.swift */,
 				2A772C662311E47500ABF2C3 /* AppDelegate.swift */,
 				2A772C682311E47500ABF2C3 /* SceneDelegate.swift */,
@@ -176,6 +225,8 @@
 				2A772CA72311E5AC00ABF2C3 /* Date+Extensions.swift */,
 				2A772CA82311E5AC00ABF2C3 /* Format+Extensions.swift */,
 				2A772CA42311E5AC00ABF2C3 /* String+Extensions.swift */,
+				2A6EC88D2312C0D700A62B23 /* Extension+Array.swift */,
+				2A6EC88F2312C0F900A62B23 /* Extension+FileManager.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -189,6 +240,9 @@
 				2A772CB52311E64A00ABF2C3 /* CFCalendar.swift */,
 				2A772CB42311E64A00ABF2C3 /* Portfolio.swift */,
 				2A772CB82311E64A00ABF2C3 /* PotfolioFilter.swift */,
+				2A6EC88B2312BB1A00A62B23 /* Catalogue.swift */,
+				2A45EB5F2312A9AA00DC7B28 /* CbondLogin.swift */,
+				2A45EB5D2312A77500DC7B28 /* Settings.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -196,6 +250,7 @@
 		2A772CB12311E63300ABF2C3 /* Supporting Views */ = {
 			isa = PBXGroup;
 			children = (
+				2A772CAE2311E61500ABF2C3 /* SaveDoneCancelButtons.swift */,
 			);
 			path = "Supporting Views";
 			sourceTree = "<group>";
@@ -275,6 +330,8 @@
 				2A772C672311E47500ABF2C3 /* AppDelegate.swift in Sources */,
 				2A772C9E2311E4C800ABF2C3 /* GridItem.swift in Sources */,
 				2A772C8F2311E4C800ABF2C3 /* CashFlowList.swift in Sources */,
+				2A45EB5E2312A77500DC7B28 /* Settings.swift in Sources */,
+				2A6EC8952312C17A00A62B23 /* CBondEmission.swift in Sources */,
 				2A772CA92311E5AC00ABF2C3 /* String+Extensions.swift in Sources */,
 				2A772C9B2311E4C800ABF2C3 /* CashFlowGrid.swift in Sources */,
 				2A772C942311E4C800ABF2C3 /* TimelineGraphForRow.swift in Sources */,
@@ -291,18 +348,29 @@
 				2A772CBA2311E64A00ABF2C3 /* AddPosition.swift in Sources */,
 				2A772C692311E47500ABF2C3 /* SceneDelegate.swift in Sources */,
 				2A772C982311E4C800ABF2C3 /* CashFlowRow.swift in Sources */,
+				2A6EC8902312C0F900A62B23 /* Extension+FileManager.swift in Sources */,
 				2A772C932311E4C800ABF2C3 /* CashFlowView.swift in Sources */,
+				2A45EB602312A9AA00DC7B28 /* CbondLogin.swift in Sources */,
 				2A772CA02311E4C800ABF2C3 /* UserData.swift in Sources */,
 				2A772CBB2311E64A00ABF2C3 /* Portfolio.swift in Sources */,
+				2A6EC89E2312C2C000A62B23 /* CashFlowStructure.swift in Sources */,
+				2A6EC89C2312C24700A62B23 /* readJSON.swift in Sources */,
+				2A6EC8932312C15100A62B23 /* Extension+DateFormatter.swift in Sources */,
+				2AFA835A2313082000A30A28 /* EmissionStructure.swift in Sources */,
+				2A6EC8972312C1A600A62B23 /* CBondFlow.swift in Sources */,
 				2A772CBE2311E64A00ABF2C3 /* ContentView.swift in Sources */,
 				2A772CA12311E4C800ABF2C3 /* TimelineView.swift in Sources */,
 				2A772C922311E4C800ABF2C3 /* CashFlowTimeline.swift in Sources */,
+				2A6EC8A02312C35500A62B23 /* cbondRequest.swift in Sources */,
 				2A772C962311E4C800ABF2C3 /* TableInCell.swift in Sources */,
+				2A6EC88E2312C0D700A62B23 /* Extension+Array.swift in Sources */,
 				2A772CBF2311E64A00ABF2C3 /* PotfolioFilter.swift in Sources */,
 				2A772C972311E4C800ABF2C3 /* CashFlowCell.swift in Sources */,
 				2A772C9C2311E4C800ABF2C3 /* CashFlowType.swift in Sources */,
 				2A772CBD2311E64A00ABF2C3 /* AddIssue.swift in Sources */,
+				2A6EC88C2312BB1A00A62B23 /* Catalogue.swift in Sources */,
 				2A772CB92311E64A00ABF2C3 /* AddPortfolio.swift in Sources */,
+				2A6EC8992312C1C600A62B23 /* CBondMeta.swift in Sources */,
 				2A772CAD2311E5AC00ABF2C3 /* Format+Extensions.swift in Sources */,
 				2A772C9A2311E4C800ABF2C3 /* Data.swift in Sources */,
 			);
