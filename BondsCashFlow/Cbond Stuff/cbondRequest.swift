@@ -40,6 +40,11 @@ func cbondRequest(login: String = "test", password: String = "test", limit: Int 
         
         (data, response, error) in
         
+        if let error = error {
+            print(error.localizedDescription)
+            return
+        }
+        
         guard let httpResponse = response as? HTTPURLResponse,
             httpResponse.statusCode == 200,
             let data = data else {
@@ -54,7 +59,49 @@ func cbondRequest(login: String = "test", password: String = "test", limit: Int 
                 .appendingPathExtension("json")
             print(jsonURL)
             
+            //  store fetched data locally
             try! postResponse.write(to: jsonURL, atomically: true, encoding: .utf8)
+            
+            //  create JSON decoder
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .formatted(.cbondDateFormatter)
+            
+            //  create JSON encoder
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            
+            if cbondOperation == "get_emissions" {   //  get_emissions (параметры эмиссий)
+                do {
+                    let cbondEmission = try decoder.decode(CBondGetEmission.self, from: data)
+                    //  MARK: - TODO: parse header - could be valuable info there
+                    let item = cbondEmission.items[0]
+                    let itemsData = try encoder.encode(item)
+                    
+                    let itemsURL = URL(fileURLWithPath: "get_emissions_items",
+                                       relativeTo: FileManager.documentDirectoryURL)
+                        .appendingPathExtension("json")
+                    try itemsData.write(to: itemsURL)
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+            
+            if cbondOperation == "get_flow" {    //  get_flow (потоки платежей)
+                do {
+                    let cbondFlow = try decoder.decode(CBondGetFlow.self, from: data)
+                    //  MARK: - TODO: parse header - could be valuable info there
+                    let item = cbondFlow.items[0]
+                    let itemsData = try encoder.encode(item)
+                    
+                    let itemsURL = URL(fileURLWithPath: "get_flow_items",
+                                       relativeTo: FileManager.documentDirectoryURL)
+                        .appendingPathExtension("json")
+                    try itemsData.write(to: itemsURL)
+                } catch {
+                    print(error.localizedDescription)
+                }
+                
+            }
         }
     }
     
@@ -63,7 +110,7 @@ func cbondRequest(login: String = "test", password: String = "test", limit: Int 
 
 func cbondSession(background: Bool = false) -> URLSession {
     if background {
-        let backgroundConfiguration = URLSessionConfiguration.background(withIdentifier: "com.photoigor.cbonds")
+        let backgroundConfiguration = URLSessionConfiguration.background(withIdentifier: "com.photoigor.bondscashflow.cbonds")
         return URLSession(configuration: backgroundConfiguration)
     } else {
         return URLSession(configuration: .default)
