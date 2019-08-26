@@ -14,7 +14,7 @@ enum CBondError: Error {
 
 //  MARK: - add filters to query
 //  MARK: - add background option
-func cbondRequest(login: String = "test", password: String = "test", limit: Int = 10, offset: Int = 0, cbondOperation: String = "get_flow") throws {
+func cbondRequest(login: String = "test", password: String = "test", limit: Int = 10, offset: Int = 0, cbondOperation: String = "get_flow", background: Bool = false) throws {
     
     //  could handle just "get_flow" or "get_emissions"
     //  get_emissions (параметры эмиссий)
@@ -34,7 +34,8 @@ func cbondRequest(login: String = "test", password: String = "test", limit: Int 
     
     
     //  MARK: - add background operation
-    let session = URLSession(configuration: .default)
+    //    let session = URLSession(configuration: .default)
+    let session = cbondSession(background: background)
     let task = session.dataTask(with: request) {
         
         (data, response, error) in
@@ -58,4 +59,13 @@ func cbondRequest(login: String = "test", password: String = "test", limit: Int 
     }
     
     task.resume()
+}
+
+func cbondSession(background: Bool = false) -> URLSession {
+    if background {
+        let backgroundConfiguration = URLSessionConfiguration.background(withIdentifier: "com.photoigor.cbonds")
+        return URLSession(configuration: backgroundConfiguration)
+    } else {
+        return URLSession(configuration: .default)
+    }
 }

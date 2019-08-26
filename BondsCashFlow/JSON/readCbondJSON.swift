@@ -1,5 +1,5 @@
 //
-//  readJSON.swift
+//  readCbondJSON.swift
 //  BondsCashFlow
 //
 //  Created by Igor Malyarov on 25.08.2019.
@@ -9,10 +9,10 @@
 import Foundation
 
 enum ReadingJSONError: Error {
-    case readingJSONError
+    case readingCbondJSONError
 }
 
-func readJSON<T: Decodable>(from filename: String, as type: T.Type = T.self) -> T? {
+func readCbondJSON<T: Decodable>(from filename: String, as type: T.Type = T.self) -> T? {
     let jsonDecoder = JSONDecoder()
     jsonDecoder.dateDecodingStrategy = .formatted(.cbondDateFormatter)
     
