@@ -12,6 +12,16 @@ enum CBondError: Error {
     case wrongOperation, notOkResponse, decodingError, writeToFileError
 }
 
+func cbondSession(background: Bool = false) -> URLSession {
+    // MARK:- что еще для background operation??
+    if background {
+        let backgroundConfiguration = URLSessionConfiguration.background(withIdentifier: "com.photoigor.bondscashflow.cbonds")
+        return URLSession(configuration: backgroundConfiguration)
+    } else {
+        return URLSession(configuration: .default)
+    }
+}
+
 //  MARK: - add filters to query
 //  MARK: - add background option
 func cbondRequest(login: String = "test", password: String = "test", limit: Int = 10, offset: Int = 0, cbondOperation: String = "get_flow", background: Bool = false) throws {
@@ -53,7 +63,7 @@ func cbondRequest(login: String = "test", password: String = "test", limit: Int 
         }
         
         if let postResponse = String(data: data, encoding: .utf8) {
-            // print(postResponse)
+//             print(postResponse)
             let jsonURL = URL(fileURLWithPath: cbondOperation,
                               relativeTo: FileManager.documentDirectoryURL)
                 .appendingPathExtension("json")
@@ -90,6 +100,7 @@ func cbondRequest(login: String = "test", password: String = "test", limit: Int 
                     //  ...
                     //  TODO: parse header - could be valuable info there
                     //        to be used to check if request is needed
+                    print("count: \(cbondEmission.count), total: \(cbondEmission.total), execTime: \(cbondEmission.execTime)")
 
                     
                     //  encode and store useful data locally
@@ -114,6 +125,8 @@ func cbondRequest(login: String = "test", password: String = "test", limit: Int 
                     //  ...
                     //  TODO: parse header - could be valuable info there
                     //        to be used to check if request is needed
+                    print("count: \(cbondFlow.count), total: \(cbondFlow.total), execTime: \(cbondFlow.execTime)")
+                    
                     
                     
                     //  encode and store useful data locally
@@ -129,14 +142,4 @@ func cbondRequest(login: String = "test", password: String = "test", limit: Int 
         }
     }
     task.resume()
-}
-
-func cbondSession(background: Bool = false) -> URLSession {
-    // MARK:- что еще для background operation??
-    if background {
-        let backgroundConfiguration = URLSessionConfiguration.background(withIdentifier: "com.photoigor.bondscashflow.cbonds")
-        return URLSession(configuration: backgroundConfiguration)
-    } else {
-        return URLSession(configuration: .default)
-    }
 }
