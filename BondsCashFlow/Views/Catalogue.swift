@@ -94,7 +94,7 @@ struct Catalogue: View {
                                     self.process = "Отправка запроса…"
                                     
                                     do {
-                                        try cbondRequest(login: self.login,
+                                        try cbondFetch(login: self.login,
                                                  password: self.password,
                                                  limit: self.cbondLimit,
                                                  offset: self.cbondOffset,

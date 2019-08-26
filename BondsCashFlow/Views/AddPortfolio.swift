@@ -10,6 +10,7 @@ import SwiftUI
 
 struct AddPortfolio: View {
     @Environment(\.presentationMode) var presentation
+    @EnvironmentObject var userData: UserData
     
     @State private var portfolioName = ""
     @State private var nameErrorNote = ""
@@ -64,5 +65,6 @@ struct AddPortfolio: View {
 struct AddPortfolio_Previews: PreviewProvider {
     static var previews: some View {
         AddPortfolio()
+        .environmentObject(UserData())
     }
 }

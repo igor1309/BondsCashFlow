@@ -10,6 +10,7 @@ import SwiftUI
 
 struct AddIssue: View {
     @Environment(\.presentationMode) var presentation
+    @EnvironmentObject var userData: UserData
     
     @State private var issuer = ""
     @State private var issuerErrorNote = ""
@@ -28,19 +29,19 @@ struct AddIssue: View {
         //  проверить на уникальность навания
     }
     
-private func validateISIN() {
-    
-    if self.issuer.isNotEmpty {
-        self.issuerErrorNote = ""
-    } else {
-        self.issuerErrorNote = "Введите название портфеля"
+    private func validateISIN() {
+        
+        if self.issuer.isNotEmpty {
+            self.issuerErrorNote = ""
+        } else {
+            self.issuerErrorNote = "Введите название портфеля"
+        }
+        
+        //  MARK: - add actions and validations
+        //  проверить на уникальность навания
     }
     
-    //  MARK: - add actions and validations
-    //  проверить на уникальность навания
-}
-
-var body: some View {
+    var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("Эмитент".uppercased())) {
@@ -48,33 +49,33 @@ var body: some View {
                     //  или и то и другое?
                     //  как проверять??
                     TextField("Название эмитента", text: $issuer,
-                    onEditingChanged: { _ in
-                      //  MARK: - all additional validating actions
-                      self.validateIssuer()},
-                    onCommit: {
-                      //  MARK: - all additional validating actions
-                      self.validateIssuer()})
+                              onEditingChanged: { _ in
+                                //  MARK: - all additional validating actions
+                                self.validateIssuer()},
+                              onCommit: {
+                                //  MARK: - all additional validating actions
+                                self.validateIssuer()})
                     
                     Picker(selection: /*@START_MENU_TOKEN@*/.constant(1)/*@END_MENU_TOKEN@*/, label: Text("Эмитент")) {
-                    /*@START_MENU_TOKEN@*/Text("1").tag(1)/*@END_MENU_TOKEN@*/
-                    /*@START_MENU_TOKEN@*/Text("2").tag(2)/*@END_MENU_TOKEN@*/
+                        /*@START_MENU_TOKEN@*/Text("1").tag(1)/*@END_MENU_TOKEN@*/
+                        /*@START_MENU_TOKEN@*/Text("2").tag(2)/*@END_MENU_TOKEN@*/
                     }
                 }
                 
                 Section(header: Text("Код выпуска (ISIN)".uppercased())) {
                     TextField("Код выпуска (ISIN)", text: $isin,
-                    onEditingChanged: { _ in
-                      //  MARK: - all additional validating actions
-                      self.validateISIN()},
-                    onCommit: {
-                      //  MARK: - all additional validating actions
-                      self.validateISIN()})
+                              onEditingChanged: { _ in
+                                //  MARK: - all additional validating actions
+                                self.validateISIN()},
+                              onCommit: {
+                                //  MARK: - all additional validating actions
+                                self.validateISIN()})
                     
                     Picker(selection: /*@START_MENU_TOKEN@*/.constant(1)/*@END_MENU_TOKEN@*/, label: Text("Код выпуска (ISIN)")) {
-                    /*@START_MENU_TOKEN@*/Text("1").tag(1)/*@END_MENU_TOKEN@*/
-                    /*@START_MENU_TOKEN@*/Text("2").tag(2)/*@END_MENU_TOKEN@*/
+                        /*@START_MENU_TOKEN@*/Text("1").tag(1)/*@END_MENU_TOKEN@*/
+                        /*@START_MENU_TOKEN@*/Text("2").tag(2)/*@END_MENU_TOKEN@*/
                     }
-}
+                }
             }
                 
             .navigationBarTitle("Добавить выпуск")
@@ -91,10 +92,10 @@ var body: some View {
                     //  проверить есть ли выпуск в базе
                     //  если нет, уточнить, нужно ли его добавлять
                     if self.issuerErrorNote.isEmpty && self.isinErrorNote.isEmpty {
-                            self.presentation.wrappedValue.dismiss()
-                        }
-                    }) {
-                        Text("Save")
+                        self.presentation.wrappedValue.dismiss()
+                    }
+                }) {
+                    Text("Save")
             })
             
         }
@@ -104,5 +105,6 @@ var body: some View {
 struct AddIssue_Previews: PreviewProvider {
     static var previews: some View {
         AddIssue()
+            .environmentObject(UserData())
     }
 }

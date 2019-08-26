@@ -8,7 +8,31 @@
 
 import SwiftUI
 
+let portfolioData = loadPortfolioData()
+
 let cashFlowData = loadCashFlowData()
+
+
+func loadPortfolioData() -> [Portfolio] {
+    guard let data: [Portfolio] = loadFromDocDir("porfolios.json") else {
+        return [
+            Portfolio(name: "Bumblebee",
+                      positions: [
+                        Position(isin: "RU000A0ZZAR2", qty: 12139),
+                        Position(isin: "RU000A100HW3", qty: 1096),
+                        Position(isin: "RU000A100E70", qty: 89)
+            ]),
+            Portfolio(name: "Megatron",
+                      positions: [
+                        Position(isin: "RU000A100HW3", qty: 10),
+                        Position(isin: "RU000A100E70", qty: 1)
+            ])
+
+        ]
+    }
+    
+    return data
+}
 
 func loadCashFlowData() -> [CashFlow] {
     return [

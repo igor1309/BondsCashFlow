@@ -9,25 +9,26 @@
 import SwiftUI
 
 struct CFCalendar: View {
+    @EnvironmentObject var userData: UserData
     @State private var showPortfolioFilter = false
     
     var body: some View {
         VStack {
-            Text("это картинка ↓").foregroundColor(.systemRed)
-            Image("cfcalendar")
+            Text("TBD")
             
         }
         .navigationBarTitle("Потоки")
             
-        .navigationBarItems(trailing: Button(action: {
-            self.showPortfolioFilter = true
-        }) {
-            Image(systemName: "line.horizontal.3.decrease.circle")
+        .navigationBarItems(trailing:
+            Button(action: {
+                self.showPortfolioFilter = true
+            }) {
+                Image(systemName: "line.horizontal.3.decrease.circle")
+            }
+            .disabled(!self.userData.hasAtLeastTwoPortfolios))
             
-        })
-            
-            .sheet(isPresented: $showPortfolioFilter,
-                   content: { PotfolioFilter() })
+        .sheet(isPresented: $showPortfolioFilter,
+               content: { PotfolioFilter().environmentObject(self.userData) })
     }
 }
 
@@ -35,6 +36,7 @@ struct CFCalendar_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             CFCalendar()
+                .environmentObject(UserData())
         }
     }
 }

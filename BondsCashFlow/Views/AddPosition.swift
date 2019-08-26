@@ -10,6 +10,8 @@ import SwiftUI
 
 struct AddPosition: View {
     @Environment(\.presentationMode) var presentation
+    @EnvironmentObject var userData: UserData
+    
     @State private var qty = 1
     @State private var qtyErrorNote = ""
     
@@ -34,7 +36,7 @@ struct AddPosition: View {
                 //  MARK: - а может брать Код выпуска из базы?
                 //  или и то и другое?
                 //  как проверять??
-Section(header: Text("Код выпуска (ISIN)".uppercased())) {
+                Section(header: Text("Код выпуска (ISIN)".uppercased())) {
                     Picker(selection: .constant(1), label: Text("Код выпуска (ISIN)")) {
                         Text("Выпуск 1").tag(1)
                         Text("Выпуск 2").tag(2)
@@ -81,5 +83,6 @@ Section(header: Text("Код выпуска (ISIN)".uppercased())) {
 struct AddPosition_Previews: PreviewProvider {
     static var previews: some View {
         AddPosition()
+            .environmentObject(UserData())
     }
 }

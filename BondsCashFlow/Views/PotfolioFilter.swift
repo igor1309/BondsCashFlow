@@ -10,39 +10,42 @@ import SwiftUI
 
 struct PotfolioFilter: View {
     @Environment(\.presentationMode) var presentation
+    @EnvironmentObject var userData: UserData
     
-    //  MARK: - change to observable object and userData
-    @State var isAllPortfoliosSelected = true
-    @State var selectedPortfolio: Int = 0
+    var portfolioNames: [String] {
+        userData.portfolios.map({ $0.name })
+    }
     
     var body: some View {
         NavigationView {
             Form {
-                Toggle(isOn: $isAllPortfoliosSelected) {
-                    Text("Все портфели")
-                }
-                
-                Section {
+                if userData.hasAtLeastTwoPortfolios {
+                    Toggle(isOn: $userData.isAllPortfoliosSelected) {
+                        Text("Все портфели")
+                    }
                     
-                    if !isAllPortfoliosSelected {
-                        //  MARK: - change to portfilo names
-                        Picker(selection: $selectedPortfolio, label: Text("Портфель")
-                        ){
-                            Text("Портфель 1").tag(1)
-                            Text("Портфель 2").tag(2)
-                            Text("Портфель 3").tag(3)
-                            Text("Портфель 4").tag(4)
+                    if !self.userData.isAllPortfoliosSelected {
+                        Section {
+                            Picker(selection: self.$userData.selectedPortfolio, label: Text("")//"Портфель")
+                            ){
+                                ForEach(portfolioNames, id: \.self) { name in
+                                    Text(name).tag(name)
+                                }
+                            }
+                            .pickerStyle(WheelPickerStyle())
                         }
                     }
+                } else {
+                    EmptyView()
                 }
             }
             .navigationBarTitle("Фильтр")
                 
             .navigationBarItems(trailing: Button(action: {
-                    //  MARK: - add actions
-                    self.presentation.wrappedValue.dismiss()
-                }) {
-                    Text("Закрыть")
+                //  MARK: - add actions
+                self.presentation.wrappedValue.dismiss()
+            }) {
+                Text("Закрыть")
             })
         }
     }
@@ -51,5 +54,6 @@ struct PotfolioFilter: View {
 struct PotfolioFilter_Previews: PreviewProvider {
     static var previews: some View {
         PotfolioFilter()
+            .environmentObject(UserData())
     }
 }

@@ -25,12 +25,16 @@ struct CbondLogin: View {
                     TextField("Пароль", text: $password)
                 }
                 
-                Button(action: {
-                    self.login = "test"
-                    self.password = "test"
-                    self.footer = "Тестовый доступ по test:test"
-                }) {
-                    Text("Сбросить")
+                if !(login == "test" && password == "test") {
+                    Button(action: {
+                        self.login = "test"
+                        self.password = "test"
+                        self.footer = "Тестовый доступ по test:test"
+                    }) {
+                        Text("Сбросить")
+                    }
+                } else {
+                    /*@START_MENU_TOKEN@*/EmptyView()/*@END_MENU_TOKEN@*/
                 }
                 
             }

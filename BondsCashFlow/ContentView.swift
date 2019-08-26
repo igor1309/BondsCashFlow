@@ -9,7 +9,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selection = 2
+    @EnvironmentObject var userData: UserData
+    @State private var selection = 1
     
     var body: some View {
         TabView(selection: $selection){
@@ -26,7 +27,7 @@ struct ContentView: View {
             .tag(0)
             
             NavigationView {
-                Portfolio()
+                PortfolioView()
             }
             .tabItem {
                 VStack {
@@ -64,5 +65,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(UserData())
     }
 }
