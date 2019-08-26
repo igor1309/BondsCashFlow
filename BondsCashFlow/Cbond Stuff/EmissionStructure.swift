@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct EmissionStructure: Hashable {
+struct EmissionStructure: Codable, Hashable {
     let isinCode: String // Код ISIN Varchar
     let emitentNameRus: String // Эмитент (rus) Varchar
     let maturityDate: Date // Дата погашения Date

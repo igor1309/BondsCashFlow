@@ -133,8 +133,8 @@
 				2A6EC8962312C1A600A62B23 /* CBondFlow.swift */,
 				2A6EC8982312C1C600A62B23 /* CBondMeta.swift */,
 				2A6EC89F2312C35500A62B23 /* cbondRequest.swift */,
-				2A6EC89D2312C2C000A62B23 /* CashFlowStructure.swift */,
 				2AFA83592313082000A30A28 /* EmissionStructure.swift */,
+				2A6EC89D2312C2C000A62B23 /* CashFlowStructure.swift */,
 			);
 			path = "Cbond Stuff";
 			sourceTree = "<group>";

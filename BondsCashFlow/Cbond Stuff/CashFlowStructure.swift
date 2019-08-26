@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct CashFlowStructure: Hashable {
+struct CashFlowStructure: Codable, Hashable {
     /// Основные поля: Денежный поток - get_flow
     let id: Int // Уникальный идентификатор long
     let emissionID: Int // Эмиссия (id) long

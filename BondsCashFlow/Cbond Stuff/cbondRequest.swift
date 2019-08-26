@@ -74,13 +74,16 @@ func cbondRequest(login: String = "test", password: String = "test", limit: Int 
                 do {
                     let cbondEmission = try decoder.decode(CBondGetEmission.self, from: data)
                     //  MARK: - TODO: parse header - could be valuable info there
-                    let item = cbondEmission.items[0]
-                    let itemsData = try encoder.encode(item)
+                    //  ...
                     
-                    let itemsURL = URL(fileURLWithPath: "get_emissions_items",
-                                       relativeTo: FileManager.documentDirectoryURL)
+                    let emissionStructure = cbondEmission.items.map({ EmissionStructure(from: $0) }).removingDuplicates()
+                    
+                    let emissionStructureData = try encoder.encode(emissionStructure)
+                    
+                    let emissionStructureURL = URL(fileURLWithPath: "get_emissions_items",
+                                                   relativeTo: FileManager.documentDirectoryURL)
                         .appendingPathExtension("json")
-                    try itemsData.write(to: itemsURL)
+                    try emissionStructureData.write(to: emissionStructureURL)
                 } catch {
                     print(error.localizedDescription)
                 }
@@ -90,13 +93,16 @@ func cbondRequest(login: String = "test", password: String = "test", limit: Int 
                 do {
                     let cbondFlow = try decoder.decode(CBondGetFlow.self, from: data)
                     //  MARK: - TODO: parse header - could be valuable info there
-                    let item = cbondFlow.items[0]
-                    let itemsData = try encoder.encode(item)
+                    //  ...
                     
-                    let itemsURL = URL(fileURLWithPath: "get_flow_items",
-                                       relativeTo: FileManager.documentDirectoryURL)
+                    let cashFlowStructure = cbondFlow.items.map({ CashFlowStructure(from: $0) }).removingDuplicates()
+                    
+                    let cashFlowStructureData = try encoder.encode(cashFlowStructure)
+                    
+                    let cashFlowStructureURL = URL(fileURLWithPath: "get_emissions_items",
+                                                   relativeTo: FileManager.documentDirectoryURL)
                         .appendingPathExtension("json")
-                    try itemsData.write(to: itemsURL)
+                    try cashFlowStructureData.write(to: cashFlowStructureURL)
                 } catch {
                     print(error.localizedDescription)
                 }
