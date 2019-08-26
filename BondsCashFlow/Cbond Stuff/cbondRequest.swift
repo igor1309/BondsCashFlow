@@ -25,16 +25,16 @@ func cbondRequest(login: String = "test", password: String = "test", limit: Int 
         throw CBondError.wrongOperation
     }
     
-    let json = "{\"auth\":{\"login\":\"\(login)\",\"password\":\"\(password)\"},\"quantity\":{\"limit\":" + String(limit) + ",\"offset\":" + String(offset) + "}}"
     
     let url = URL(string: "https://ws.cbonds.info/services/json/" + cbondOperation + "/")!
     var request = URLRequest(url: url)
     request.httpMethod = "Post"
+    
+    let json = "{\"auth\":{\"login\":\"\(login)\",\"password\":\"\(password)\"},\"quantity\":{\"limit\":" + String(limit) + ",\"offset\":" + String(offset) + "}}"
     request.httpBody = json.data(using: .utf8)
     
     
-    //  MARK: - add background operation
-    //    let session = URLSession(configuration: .default)
+    //  MARK: - TODO: add background operation
     let session = cbondSession(background: background)
     let task = session.dataTask(with: request) {
         
@@ -69,57 +69,70 @@ func cbondRequest(login: String = "test", password: String = "test", limit: Int 
             //  create JSON encoder
             let encoder = JSONEncoder()
             encoder.outputFormatting = .prettyPrinted
-                        
+            
+            //  prepare filename ("emissions" or "flow") and URL
+            let filename = String(cbondOperation.split(separator: "_", maxSplits: 1)[1])
+            let filenameURL = URL(fileURLWithPath: filename,
+                                  relativeTo: FileManager.documentDirectoryURL)
+                .appendingPathExtension("json")
+            
+            
+            //  parse fetched data according to request
+            
             if cbondOperation == "get_emissions" {   //  get_emissions (параметры эмиссий)
                 do {
+                    //  decode and take just the data we want
                     let cbondEmission = try decoder.decode(CBondGetEmission.self, from: data)
+                    let emissionStructure = cbondEmission.items.map({ EmissionStructure(from: $0) })
+                        .removingDuplicates()
+                    
                     //  MARK: - TODO: parse header - could be valuable info there
                     //  ...
-                    
-                    let emissionStructure = cbondEmission.items.map({ EmissionStructure(from: $0) }).removingDuplicates()
-                    print("emissionStructure.count: \(emissionStructure.count)")
+                    //  TODO: parse header - could be valuable info there
+                    //        to be used to check if request is needed
 
-                    let emissionStructureData = try encoder.encode(emissionStructure)
                     
-                    let emissionStructureURL = URL(fileURLWithPath: "emissions",
-                                                   relativeTo: FileManager.documentDirectoryURL)
-                        .appendingPathExtension("json")
-                    try emissionStructureData.write(to: emissionStructureURL)
+                    //  encode and store useful data locally
+                    let usefulData = try encoder.encode(emissionStructure)
+                    try usefulData.write(to: filenameURL)
+                    
+                    print("fetched data parsed, optimized and saved\n" +
+                        "emissionStructure.count: \(emissionStructure.count)")
                 } catch {
                     print(error.localizedDescription)
                 }
             }
-            
-//            print(data.base64EncodedString())
-            
             
             if cbondOperation == "get_flow" {    //  get_flow (потоки платежей)
                 do {
+                    //  decode and take just the data we want
                     let cbondFlow = try decoder.decode(CBondGetFlow.self, from: data)
+                    let cashFlowStructure = cbondFlow.items.map({ CashFlowStructure(from: $0) })
+                        .removingDuplicates()
+                    
                     //  MARK: - TODO: parse header - could be valuable info there
                     //  ...
+                    //  TODO: parse header - could be valuable info there
+                    //        to be used to check if request is needed
                     
-                    let cashFlowStructure = cbondFlow.items.map({ CashFlowStructure(from: $0) }).removingDuplicates()
-                    print("cashFlowStructure.count: \(cashFlowStructure.count)")
                     
-                    let cashFlowStructureData = try encoder.encode(cashFlowStructure)
+                    //  encode and store useful data locally
+                    let usefulData = try encoder.encode(cashFlowStructure)
+                    try usefulData.write(to: filenameURL)
                     
-                    let cashFlowStructureURL = URL(fileURLWithPath: "flow",
-                                                   relativeTo: FileManager.documentDirectoryURL)
-                        .appendingPathExtension("json")
-                    try cashFlowStructureData.write(to: cashFlowStructureURL)
+                    print("fetched data parsed, optimized and saved\n" +
+                        "cashFlowStructure.count: \(cashFlowStructure.count)")
                 } catch {
                     print(error.localizedDescription)
                 }
-                
             }
         }
     }
-    
     task.resume()
 }
 
 func cbondSession(background: Bool = false) -> URLSession {
+    // MARK:- что еще для background operation??
     if background {
         let backgroundConfiguration = URLSessionConfiguration.background(withIdentifier: "com.photoigor.bondscashflow.cbonds")
         return URLSession(configuration: backgroundConfiguration)

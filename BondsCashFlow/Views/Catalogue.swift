@@ -19,7 +19,7 @@ struct Catalogue: View {
     
     //  MARK: - change to userdata, store if changed (UserDefaults)
     @State private var cbondOperation = "get_flow"  // get_emissions
-    @State private var cbondLimit = 10
+    @State private var cbondLimit = 1000
     @State private var cbondOffset = 0
     
     @State private var showConfirm = false
