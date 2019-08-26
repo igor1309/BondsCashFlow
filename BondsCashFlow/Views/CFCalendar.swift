@@ -23,7 +23,7 @@ struct CFCalendar: View {
             Button(action: {
                 self.showPortfolioFilter = true
             }) {
-                Image(systemName: "line.horizontal.3.decrease.circle")
+                Image(systemName: "briefcase")
             }
             .disabled(!self.userData.hasAtLeastTwoPortfolios))
             

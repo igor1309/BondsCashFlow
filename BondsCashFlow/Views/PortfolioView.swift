@@ -8,34 +8,6 @@
 
 import SwiftUI
 
-struct PositionRow: View {
-    var portfolioName: String
-    var position: Position
-    
-    public var borderColor: Color = .systemGray
-    public var cornerRadius: CGFloat = 8
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text(position.isin)
-                
-                Spacer()
-                
-                Text(position.qty.formattedGrouped)
-            }
-            
-            HStack {
-                Text(portfolioName)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                
-                Spacer()
-            }
-        }
-    }
-}
-
 struct PortfolioView: View {
     @Environment(\.presentationMode) var presentation
     @EnvironmentObject var userData: UserData
@@ -55,22 +27,28 @@ struct PortfolioView: View {
             if userData.isAllPortfoliosSelected {
                 ForEach(userData.portfolios) { portfolio in
                     ForEach(portfolio.positions) { position in
-                        PositionRow(portfolioName: portfolio.name,
-                                    position: position)
+                        
+                        NavigationLink(destination: PositionDetail(portfolioName: portfolio.name, position: position)){
+                            
+                            PositionRow(portfolioName: portfolio.name, position: position)
+                        }
                     }
                 }
             } else {
                 if userData.selectedPortfolio.isNotEmpty {
                     ForEach(userData.portfolios.first(where: { $0.name == self.userData.selectedPortfolio })!.positions, id: \.self) { position in
-                        PositionRow(portfolioName: self.userData.selectedPortfolio,
-                                    position: position)
+                        
+                        NavigationLink(destination: PositionDetail(portfolioName: self.userData.selectedPortfolio, position: position)){
+                            
+                            PositionRow(portfolioName: self.userData.selectedPortfolio, position: position)
+                        }
                     }
                 } else {
                     /*@START_MENU_TOKEN@*/EmptyView()/*@END_MENU_TOKEN@*/
                 }
             }
         }
-        .navigationBarTitle("Портфели")
+        .navigationBarTitle("Позиции")
             
         .navigationBarItems(
             leading: Button(action: {
@@ -85,7 +63,7 @@ struct PortfolioView: View {
                     self.showModal = true
                 }
             }) {
-                Image(systemName: "line.horizontal.3.decrease.circle")
+                Image(systemName: "briefcase")
             }
             .disabled(!self.userData.hasAtLeastTwoPortfolios)
         )

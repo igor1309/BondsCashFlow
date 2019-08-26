@@ -31,7 +31,7 @@ struct ContentView: View {
             }
             .tabItem {
                 VStack {
-                    Image(systemName: "chart.bar.fill")
+                    Image(systemName: "briefcase.fill")
                     Text("Портфели")
                 }
             }

@@ -20,12 +20,14 @@ struct PotfolioFilter: View {
         NavigationView {
             Form {
                 if userData.hasAtLeastTwoPortfolios {
-                    Toggle(isOn: $userData.isAllPortfoliosSelected) {
-                        Text("Все портфели")
+                    Section(header: Text("Показывать позиции".uppercased())) {
+                        Toggle(isOn: $userData.isAllPortfoliosSelected) {
+                            Text("Во всех портфелях")
+                        }
                     }
                     
                     if !self.userData.isAllPortfoliosSelected {
-                        Section {
+                        Section(header: Text("Для портфеля".uppercased())) {
                             Picker(selection: self.$userData.selectedPortfolio, label: Text("")//"Портфель")
                             ){
                                 ForEach(portfolioNames, id: \.self) { name in
