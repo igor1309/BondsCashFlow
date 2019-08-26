@@ -33,24 +33,28 @@ struct CashFlowStructure: Codable, Hashable {
     
     init(from: CBondFlow) {
         self.id = Int(from.id) ?? -1
-        self.emissionID = Int(from.emissionID) ?? -1
-        self.emissionIsinCode = from.emissionIsinCode
-        self.emissionEmitentID = Int(from.emissionEmitentID) ?? -1
+        self.emissionID = Int(from.emissionID ?? "-1") ?? -1
+        self.emissionIsinCode = from.emissionIsinCode ?? ""
+        self.emissionEmitentID = Int(from.emissionEmitentID  ?? "-1") ?? -1
         
         //  date @ get_flow is string like 2011-03-28
-        let dateComponents = DateComponents(year: Int(from.date.prefix(4)),
-                                            month: Int(from.date.suffix(5).prefix(2)),
-                                            day: Int(from.date.suffix(2)))
-        self.date = Calendar.current.date(from: dateComponents) ?? .distantPast
+        if let date = from.date {
+            let dateComponents = DateComponents(year: Int(date.prefix(4)),
+                                                month: Int(date.suffix(5).prefix(2)),
+                                                day: Int(date.suffix(2)))
+            self.date = Calendar.current.date(from: dateComponents) ?? .distantPast
+        } else {
+            self.date = .distantPast
+        }
         
-        self.startDate = from.startDate
-        self.couponNum = Int(from.couponNum) ?? -1
-        self.cuponRate = Double(from.cuponRate) ?? -1
-        self.cuponRateDate = from.cuponRateDate
-        self.cuponSum = Double(from.cuponSum) ?? -1
-        self.daysBeetwenCoupons = Int(from.daysBeetwenCoupons ?? "") ?? -1
-        self.redemtion = Double(from.redemtion ?? "") ?? -1
-        self.updatingDate = from.updatingDate
+        self.startDate = from.startDate ?? .distantPast
+        self.couponNum = Int(from.couponNum ?? "-1") ?? -1
+        self.cuponRate = Double(from.cuponRate ?? "-1") ?? -1
+        self.cuponRateDate = from.cuponRateDate ?? .distantPast
+        self.cuponSum = Double(from.cuponSum ?? "-1") ?? -1
+        self.daysBeetwenCoupons = Int(from.daysBeetwenCoupons ?? "-1") ?? -1
+        self.redemtion = Double(from.redemtion ?? "-1") ?? -1
+        self.updatingDate = from.updatingDate ?? .distantPast
         //        self.actualPaymentDate = from.actualPaymentDate ?? ""
         //        self.cuponSumEurobondsNominal = Double(from.cuponSumEurobondsNominal) ?? -1
         //        self.cuponSumIntegralMultiple = Double(from.cuponSumIntegralMultiple) ?? -1

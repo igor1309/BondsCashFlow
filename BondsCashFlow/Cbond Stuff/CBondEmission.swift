@@ -25,106 +25,107 @@ public struct CBondGetEmission: Codable {
 // MARK: - CBondEmission
 public struct CBondEmission: Codable {
     public let id: String
+    public let isinCode, emitentNameRus, cuponRus: String
     public let formalEmitentID, formalEmitentCountry, formalEmitentBranchID, formalEmitentRegFormID, formalEmitentType, formalEmitentNameEng, formalEmitentNameRus: String?
     public let formalEmitentNamePol, formalEmitentNameIta: String?
-    public let announcedVolume: String
+    public let announcedVolume: String?
     public let auctionTypeID: String?
-    public let bbgid, bbgidComposite: String
+    public let bbgid, bbgidComposite: String?
     public let bbgidTicker: String?
-    public let bondType, cfiCode, cfiCode144A, convertable: String
-    public let couponTypeID, updatingDate: String
+    public let bondType, cfiCode, cfiCode144A, convertable: String?
+    public let couponTypeID, updatingDate: String?
     public let cusip144A, cusipRegs, cuponPeriod: String?
-    public let currencyID, currencyName: String
+    public let currencyID, currencyName: String?
     public let dateOfEndPlacing: String?
     public let dateOfStartCirculation, dateOfStartPlacing: String?
-    public let dccCode, dccCode144A, documentEng, documentRus: String
-    public let documentPol, documentIta: String
+    public let dccCode, dccCode144A, documentEng, documentRus: String?
+    public let documentPol, documentIta: String?
     public let earlyRedemptionDate: String?
-    public let emissionCuponBasisID, emissionCuponBasisTitle, emissionEmitentID, emitentID: String
-    public let floatingRate, isinCode: String
-    public let isinCode144A, isinCode3: String
+    public let emissionCuponBasisID, emissionCuponBasisTitle, emissionEmitentID, emitentID: String?
+    public let floatingRate: String?
+    public let isinCode144A, isinCode3: String?
     public let incomeOfPrimaryPlacing, issueFormID, integralMultiple: String?
-    public let kindID: String
+    public let kindID: String?
     public let maturityDate, margin: String?
-    public let micexShortname: String
+    public let micexShortname: String?
     public let nextReplacingAmount, nextReplacingDate: String?
-    public let nominalPrice, numberOfEmission, numberOfEmissionEng, outstandingNominalPrice: String
+    public let nominalPrice, numberOfEmission, numberOfEmissionEng, outstandingNominalPrice: String?
     public let placedVolume: String?
-    public let placingTypeID: String
+    public let placingTypeID: String?
     public let priceOfPrimaryPlacing: String?
-    public let privateOfferingID: String
+    public let privateOfferingID: String?
     public let referenceRateID, registrationDate: String?
     public let settlementDate: String?
     public let ssTgCountries, ssTgQlists, ssTradingGrounds: String?
-    public let stateRegNumber, statusID, subordinatedDebt: String
+    public let stateRegNumber, statusID, subordinatedDebt: String?
     public let subkindID: String?
-    public let vidID, agentsEng, agentsRus: String
+    public let vidID, agentsEng, agentsRus: String?
     public let agentsPol, agentsIta: String?
-    public let cuponEng, cuponRus: String
+    public let cuponEng: String?
     public let cuponPol, cuponIta: String?
-    public let indexationEng, indexationRus: String
+    public let indexationEng, indexationRus: String?
     public let indexationPol, indexationIta: String?
-    public let numberOfEmissionRus, numberOfEmissionPol, numberOfEmissionIta: String
-    public let kindNameEng, kindNameRus, kindNamePol, kindNameIta: String
-    public let placingTypeNameEng, placingTypeNameRus, placingTypeNamePol, placingTypeNameIta: String
-    public let statusNameEng, statusNameRus, statusNamePol, statusNameIta: String
-    public let emitentCountry, emitentCountryRegionID, emitentCountrySubregionID, emitentEmail: String
-    public let emitentInn, emitentInnUa, emitentPhone, emitentRegFormID: String
-    public let emitentRegFormNameEng, emitentRegFormNameRus, emitentType, emitentBranchID: String
-    public let emitentCountryNameEng, emitentCountryNameRus, emitentCountryNamePol, emitentCountryNameIta: String
-    public let emitentAdressEng, emitentAdressRus: String
+    public let numberOfEmissionRus, numberOfEmissionPol, numberOfEmissionIta: String?
+    public let kindNameEng, kindNameRus, kindNamePol, kindNameIta: String?
+    public let placingTypeNameEng, placingTypeNameRus, placingTypeNamePol, placingTypeNameIta: String?
+    public let statusNameEng, statusNameRus, statusNamePol, statusNameIta: String?
+    public let emitentCountry, emitentCountryRegionID, emitentCountrySubregionID, emitentEmail: String?
+    public let emitentInn, emitentInnUa, emitentPhone, emitentRegFormID: String?
+    public let emitentRegFormNameEng, emitentRegFormNameRus, emitentType, emitentBranchID: String?
+    public let emitentCountryNameEng, emitentCountryNameRus, emitentCountryNamePol, emitentCountryNameIta: String?
+    public let emitentAdressEng, emitentAdressRus: String?
     public let emitentAdressPol, emitentAdressIta: String?
-    public let emitentNameEng, emitentNameRus, emitentNamePol, emitentNameIta: String
-    public let emitentSiteEng, emitentSiteRus: String
+    public let emitentNameEng, emitentNamePol, emitentNameIta: String?
+    public let emitentSiteEng, emitentSiteRus: String?
     public let emitentSitePol, emitentSiteIta: String?
-    public let emitentTypeNameEng, emitentTypeNameRus, emitentTypeNamePol, emitentTypeNameIta: String
-    public let emitentBranchNameEng, emitentBranchNameRus, emitentBranchNamePol, emitentBranchNameIta: String
+    public let emitentTypeNameEng, emitentTypeNameRus, emitentTypeNamePol, emitentTypeNameIta: String?
+    public let emitentBranchNameEng, emitentBranchNameRus, emitentBranchNamePol, emitentBranchNameIta: String?
     public let offertDate: String?
-    public let updateTime: String
+    public let updateTime: String?
     public let bookClosingDate, bookOpeningDate: String?
-    public let moreEng, moreRus, mortgageBonds, restructing: String
+    public let moreEng, moreRus, mortgageBonds, restructing: String?
     public let restructingDate: String?
-    public let restructingMoreEng, restructingMoreRus, emitentFullNameEng, emitentFullNameRus: String
+    public let restructingMoreEng, restructingMoreRus, emitentFullNameEng, emitentFullNameRus: String?
     public let emitentFullNamePol, emitentFullNameIta: String?
-    public let perpetual: String
+    public let perpetual: String?
     public let remainingOutstandAmount, cbrfListingLombardLastDateDate, govProgramStateRegNumber: String?
-    public let privateIssue, securedDebt: String
+    public let privateIssue, securedDebt: String?
     public let spreadMidSwaps, spreadUsTreasures: String?
     public let eurobondsNominal: String?
     public let currCouponRate, currCouponSum: String?
-    public let referenceRateNameEng, referenceRateNameRus, referenceRateNamePol, referenceRateNameIta: String
-    public let subkindNameEng, subkindNameRus, subkindNamePol, subkindNameIta: String
-    public let structuredNote, couponTypeNameEng, couponTypeNameRus: String
-    public let couponTypeNamePol, couponTypeNameIta, vidNameEng, vidNameRus: String
+    public let referenceRateNameEng, referenceRateNameRus, referenceRateNamePol, referenceRateNameIta: String?
+    public let subkindNameEng, subkindNameRus, subkindNamePol, subkindNameIta: String?
+    public let structuredNote, couponTypeNameEng, couponTypeNameRus: String?
+    public let couponTypeNamePol, couponTypeNameIta, vidNameEng, vidNameRus: String?
     public let vidNamePol, vidNameIta: String?
-    public let issueFormNameEng, issueFormNameRus: String
+    public let issueFormNameEng, issueFormNameRus: String?
     public let issueFormNamePol, issueFormNameIta: String?
-    public let privateOfferingNameEng, privateOfferingNameRus, privateOfferingNamePol, privateOfferingNameIta: String
-    public let auctionTypeNameEng, auctionTypeNameRus: String
+    public let privateOfferingNameEng, privateOfferingNameRus, privateOfferingNamePol, privateOfferingNameIta: String?
+    public let auctionTypeNameEng, auctionTypeNameRus: String?
     public let auctionTypeNamePol, auctionTypeNameIta, govProgramRegistrationDate: String?
     public let emissionWknCode: String?
     public let initialPlacementVolume, emissionCouponRate, settlementDuration: String?
-    public let emissionWknCode144A: String
+    public let emissionWknCode144A: String?
     public let usdVolume: String?
-    public let offertRus, offertEng: String
+    public let offertRus, offertEng: String?
     public let offertPol, offertIta, offertDatePut, offertDateCall: String?
-    public let convertCondRus, convertCondEng: String
+    public let convertCondRus, convertCondEng: String?
     public let convertCondPol, convertCondIta, tradingGroundNameRus, tradingGroundNameEng: String?
     public let tradingGroundNamePol: String?
     public let tradingGroundNameIta, tradingGroundsFullRus, tradingGroundsFullEng, tradingsMaxdate: String?
     public let tradingsIndicativePrice, tradingsYieldEffect, tradingsDuration: String?
-    public let emissionCbrCode, securitisation: String
+    public let emissionCbrCode, securitisation: String?
     public let floor, cup: String?
     public let serialOfEmission, serialOfEmissionEng: String?
-    public let sedol: String
+    public let sedol: String?
     public let spCategoryID, spCategoryNameEng, spTypeID, spTypeNameEng: String?
     public let underlyingClassID, underlyingClassNameEng, guarantorNameEng, guarantorID: String?
     public let bondClass, delayDays: String?
-    public let bondRank, bondRankNameRus, bondRankNameEng, bondIssueForm: String
-    public let bondIssueFormNameRus, bondIssueFormNameEng, statusIssueForm, statusIssueFormNameRus: String
-    public let statusIssueFormNameEng: String
+    public let bondRank, bondRankNameRus, bondRankNameEng, bondIssueForm: String?
+    public let bondIssueFormNameRus, bondIssueFormNameEng, statusIssueForm, statusIssueFormNameRus: String?
+    public let statusIssueFormNameEng: String?
     public let qgcRewriteType: String?
-    public let allBondTypes: String
+    public let allBondTypes: String?
     
     enum CodingKeys: String, CodingKey {
         case id

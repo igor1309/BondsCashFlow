@@ -24,19 +24,23 @@ public struct CBondGetFlow: Codable {
 
 // MARK: - CBondFlow
 public struct CBondFlow: Codable {
-    public let id, emissionIsinCode, emissionID, emissionEmitentID, couponNum, cuponRate: String
-    public let cuponRateDate, updatingDate, startDate: Date
-    public let emissionKindID, emissionNominalPrice: String
+    public let id: String
+    public let emissionIsinCode: String?
+    public let emissionID, emissionEmitentID, couponNum, cuponRate, cuponSum: String?
+    public let date: String?
+    public let cuponRateDate: Date?
+    public let updatingDate: Date?
+    public let startDate: Date?
+    public let emissionKindID, emissionNominalPrice: String?
     public let actualPaymentDate: String? //Date?
-    public let cuponSum: String
-    public let cuponSumEurobondsNominal, cuponSumIntegralMultiple: String
+    public let cuponSumEurobondsNominal, cuponSumIntegralMultiple: String?
     public let daysBeetwenCoupons: String? //Int?
-    public let date, emissionEmitentCountryID, emissionEmitentCountryRegionID: String
-    public let emissionEmitentCountrySubregionID: String
-    public let moreRus, moreEng: String
+    public let emissionEmitentCountryID, emissionEmitentCountryRegionID: String?
+    public let emissionEmitentCountrySubregionID: String?
+    public let moreRus, moreEng: String?
     public let nontradingStartDate, nontradingStopDate, recordDate: String?
     public let redemtion, redemptionIntegralMultiple, redemptionEurobondsNominal, emissionIntegralMultiple: String?
-    public let showEm, showRu, showUa: String
+    public let showEm, showRu, showUa: String?
     public let moreIta, morePol, poolFactor: String?
     
     enum CodingKeys: String, CodingKey {

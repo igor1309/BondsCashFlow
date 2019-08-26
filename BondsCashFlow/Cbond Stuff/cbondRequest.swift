@@ -69,7 +69,7 @@ func cbondRequest(login: String = "test", password: String = "test", limit: Int 
             //  create JSON encoder
             let encoder = JSONEncoder()
             encoder.outputFormatting = .prettyPrinted
-            
+                        
             if cbondOperation == "get_emissions" {   //  get_emissions (параметры эмиссий)
                 do {
                     let cbondEmission = try decoder.decode(CBondGetEmission.self, from: data)
@@ -77,10 +77,11 @@ func cbondRequest(login: String = "test", password: String = "test", limit: Int 
                     //  ...
                     
                     let emissionStructure = cbondEmission.items.map({ EmissionStructure(from: $0) }).removingDuplicates()
-                    
+                    print("emissionStructure.count: \(emissionStructure.count)")
+
                     let emissionStructureData = try encoder.encode(emissionStructure)
                     
-                    let emissionStructureURL = URL(fileURLWithPath: "get_emissions_items",
+                    let emissionStructureURL = URL(fileURLWithPath: "emissions",
                                                    relativeTo: FileManager.documentDirectoryURL)
                         .appendingPathExtension("json")
                     try emissionStructureData.write(to: emissionStructureURL)
@@ -89,6 +90,9 @@ func cbondRequest(login: String = "test", password: String = "test", limit: Int 
                 }
             }
             
+//            print(data.base64EncodedString())
+            
+            
             if cbondOperation == "get_flow" {    //  get_flow (потоки платежей)
                 do {
                     let cbondFlow = try decoder.decode(CBondGetFlow.self, from: data)
@@ -96,10 +100,11 @@ func cbondRequest(login: String = "test", password: String = "test", limit: Int 
                     //  ...
                     
                     let cashFlowStructure = cbondFlow.items.map({ CashFlowStructure(from: $0) }).removingDuplicates()
+                    print("cashFlowStructure.count: \(cashFlowStructure.count)")
                     
                     let cashFlowStructureData = try encoder.encode(cashFlowStructure)
                     
-                    let cashFlowStructureURL = URL(fileURLWithPath: "get_emissions_items",
+                    let cashFlowStructureURL = URL(fileURLWithPath: "flow",
                                                    relativeTo: FileManager.documentDirectoryURL)
                         .appendingPathExtension("json")
                     try cashFlowStructureData.write(to: cashFlowStructureURL)
