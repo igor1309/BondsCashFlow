@@ -10,7 +10,8 @@ import SwiftUI
 
 struct EmitentFilter: View {
     @Environment(\.presentationMode) var presentation
-    @Binding var selectedEmitent: String
+    @Binding var filter: String
+    @State private var selectedEmitent: String = ""
     
     var emitents: [String] {
         loadEmissionListData().map({ $0.emitentNameRus }).removingDuplicates().sorted()
@@ -19,19 +20,27 @@ struct EmitentFilter: View {
     var body: some View {
         //  фильтр по эмитенту
         NavigationView {
-            VStack {
+            Form {
+                Text("Эмитент")
                 Picker(selection: $selectedEmitent, label: Text("")//Фильтр по эмитенту")
                 ){
                     ForEach(emitents, id: \.self){ name in
                         Text(name).tag(name)
                     }
                 }
-                Spacer()
+                .pickerStyle(WheelPickerStyle())
+                
+                //  MARK: - TODO do it
+                Toggle(isOn: .constant(true)) {
+                    Text("TBD: Только выпуски с потоками").foregroundColor(.systemRed)
+                }
             }
-            .navigationBarTitle("Эмитенты")
+                
+            .navigationBarTitle("Фильтр")
                 
             .navigationBarItems(trailing: Button(action: {
                 //  MARK: - add actions
+                self.filter = self.selectedEmitent
                 self.presentation.wrappedValue.dismiss()
             }) {
                 Text("Закрыть")
@@ -43,6 +52,6 @@ struct EmitentFilter: View {
 
 struct EmitentFilter_Previews: PreviewProvider {
     static var previews: some View {
-        EmitentFilter(selectedEmitent: .constant(""))
+        EmitentFilter(filter: .constant(""))
     }
 }

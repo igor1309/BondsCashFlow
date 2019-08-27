@@ -33,24 +33,19 @@ func loadCashFlowListData() -> [CashFlowStructure] {
 }
 
 func loadEmissionListData() -> [EmissionStructure] {
-    guard let data: [EmissionStructure] = loadFromDocDir("emissionlist.json") else {
-        
-        let decoder = JSONDecoder()
-        let filenameURL = URL(fileURLWithPath: "emissions",
-                              relativeTo: FileManager.documentDirectoryURL)
-            .appendingPathExtension("json")
-        
-        do {
-            let data = try Data(contentsOf: filenameURL)
-            return try decoder.decode([EmissionStructure].self, from: data)
-        }
-        catch let error {
-            print("Error: \(error.localizedDescription)")
-            return []
-        }
-    }
+    let decoder = JSONDecoder()
+    let filenameURL = URL(fileURLWithPath: "emissions",
+                          relativeTo: FileManager.documentDirectoryURL)
+        .appendingPathExtension("json")
     
-    return data
+    do {
+        let data = try Data(contentsOf: filenameURL)
+        return try decoder.decode([EmissionStructure].self, from: data)
+    }
+    catch let error {
+        print("Error: \(error.localizedDescription)")
+        return []
+    }
 }
 
 func loadPortfolioData() -> [Portfolio] {

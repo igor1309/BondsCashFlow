@@ -51,6 +51,23 @@ struct Catalogue: View {
     
     var body: some View {
         Form {
+            Section(header: Text("Локальная база".uppercased())
+                ){
+            Text("В базе всего: \(userData.emissions.count.formattedGrouped) выпусков, \(userData.emissions.map({ $0.emitentID }).removingDuplicates().count.formattedGrouped) эмитентов.")
+                //  MARK: - одна из обций должна работать - не обрезать текст
+                    .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
+            .foregroundColor(.secondary)
+            .font(.subheadline)
+            
+            Button(action: {
+                self.modal = .emitentsLocal
+                self.showModal = true
+            }) {
+                Text("Выпуски в локальной базе")
+            }
+        }
+            
             Section(header: Text("cbonds.ru".uppercased()),
                     footer: Text("")
             ){
@@ -90,13 +107,6 @@ struct Catalogue: View {
                 }
                 
                 
-            }
-            
-            Button(action: {
-                self.modal = .emitentsLocal
-                self.showModal = true
-            }) {
-                Text("Выпуски в локальной базе")
             }
             
             Section(footer: Text("Можно обновить все справочники или только по выпускам в портфелях.")
