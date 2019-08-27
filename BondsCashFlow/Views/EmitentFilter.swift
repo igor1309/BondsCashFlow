@@ -11,6 +11,7 @@ import SwiftUI
 struct EmitentFilter: View {
     @Environment(\.presentationMode) var presentation
     @Binding var filter: String
+    @Binding var preFilter: String
 //    @State private var selectedEmitent: String = loadEmissionListData().map({ $0.emitentNameRus }).removingDuplicates().sorted()[0]
     
     var emitents: [String] {
@@ -22,7 +23,7 @@ struct EmitentFilter: View {
         NavigationView {
             Form {
                 Text("Эмитент")
-                Picker(selection: $filter, label: Text("")//Фильтр по эмитенту")
+                Picker(selection: $preFilter, label: Text("")//Фильтр по эмитенту")
                 ){
                     ForEach(emitents, id: \.self){ name in
                         Text(name).tag(name)
@@ -44,6 +45,7 @@ struct EmitentFilter: View {
 //                print("selectedEmitent: " + self.selectedEmitent)
 //                self.filter = self.selectedEmitent
                 self.presentation.wrappedValue.dismiss()
+                self.filter = self.preFilter
 
 //                print("filter: " + self.filter)
 //                print("selectedEmitent: " + self.selectedEmitent)
@@ -58,6 +60,7 @@ struct EmitentFilter: View {
 
 struct EmitentFilter_Previews: PreviewProvider {
     static var previews: some View {
-        EmitentFilter(filter: .constant(""))
+        EmitentFilter(filter: .constant(""),
+                      preFilter: .constant(""))
     }
 }

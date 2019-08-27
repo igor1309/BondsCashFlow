@@ -14,39 +14,19 @@ struct EmissionList: View {
     
     var local = true
     
-    @State private var filteredEmissions: [EmissionStructure] = loadEmissionListData().sorted(by: {
-        (($0.emitentNameRus, $0.documentRus, $0.isinCode)
-            < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
-    })
+//    @State private var filteredEmissions: [EmissionStructure] = loadEmissionListData().sorted(by: {
+//        (($0.emitentNameRus, $0.documentRus, $0.isinCode)
+//            < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
+//    })
     
-    @State private var filter: String = "" {
-        didSet {
-            print("filter was set")
-            //  apply filter if at least 2 symbols entered
-            if filter.count < 2 {
-                filteredEmissions = userData.emissions.sorted(by: {
-                    (($0.emitentNameRus, $0.documentRus, $0.isinCode)
-                        < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
-                })
-            } else {
-                filteredEmissions = userData.emissions.sorted(by: {
-                    (($0.emitentNameRus, $0.documentRus, $0.isinCode)
-                        < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
-                }).filter({ $0.documentRus.contains(self.filter) ||
-                    $0.documentRus.contains(self.filter.uppercased()) ||
-                    $0.documentRus.contains(self.filter.lowercased()) ||
-                    $0.documentRus.contains(self.filter.capitalized) ||
-                    $0.isinCode.contains(self.filter) ||
-                    $0.isinCode.contains(self.filter.uppercased()) ||
-                    $0.isinCode.contains(self.filter.lowercased()) ||
-                    $0.isinCode.contains(self.filter.capitalized) ||
-                    $0.id == Int(filter) ?? -1
-                })
-            }
-            emissionsCount = filteredEmissions.count
-            emitemtsCount = filteredEmissions.map({ $0.emitentID }).removingDuplicates().count
-        }
-    }
+    @State private var filter: String = ""
+//        {
+//        didSet {
+//            print("filter was set")
+//            emissionsCount = filteredEmissions.count
+//            emitemtsCount = filteredEmissions.map({ $0.emitentID }).removingDuplicates().count
+//        }
+//    }
     
     @State private var preFilter: String = ""
     @State private var showFilter = false
@@ -75,7 +55,20 @@ struct EmissionList: View {
                     .padding(.horizontal)
                 
                 List {
-                    ForEach(filteredEmissions, id: \.self) { emission in
+                    //  apply filter if at least 2 symbols entered
+                    ForEach(userData.emissions.sorted(by: {
+                        (($0.emitentNameRus, $0.documentRus, $0.isinCode)
+                            < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
+                    }).filter({ filter.count < 2 ? $0.documentRus != "" : $0.documentRus.contains(self.filter) ||
+                        $0.documentRus.contains(self.filter.uppercased()) ||
+                        $0.documentRus.contains(self.filter.lowercased()) ||
+                        $0.documentRus.contains(self.filter.capitalized) ||
+                        $0.isinCode.contains(self.filter) ||
+                        $0.isinCode.contains(self.filter.uppercased()) ||
+                        $0.isinCode.contains(self.filter.lowercased()) ||
+                        $0.isinCode.contains(self.filter.capitalized) ||
+                        $0.id == Int(filter) ?? -1
+                    }), id: \.self) { emission in
                         
                         EmissionRow(emission: emission)
                     }
@@ -106,7 +99,8 @@ struct EmissionList: View {
                        onDismiss: {
                         self.filter = self.preFilter
                 },
-                       content: { EmitentFilter(filter: self.$preFilter) })
+                       content: { EmitentFilter(filter: self.$filter,
+                                                preFilter: self.$preFilter) })
         }
     }
 }
