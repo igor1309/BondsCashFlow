@@ -8,38 +8,6 @@
 
 import SwiftUI
 
-struct EmissionRow: View {
-    var emission: EmissionStructure
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 3) {
-            Text(emission.documentRus)
-            
-            HStack(alignment: .firstTextBaseline) {
-                VStack(alignment: .leading) {
-                    Text(emission.isinCode.isEmpty ? "isin -" : emission.isinCode)
-                    
-                    Text("emitentID " + emission.emitentID.formattedGrouped)
-                    
-                    Text(emission.emitentNameRus)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                
-                VStack(alignment: .leading) {
-                    Text("cupon_period " + emission.cupon_period.formattedGrouped)
-                    
-                    Text(emission.cupon_rus.isEmpty ? "-" : "cupon_rus " + emission.cupon_rus)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-            }
-            .font(.subheadline)
-            .foregroundColor(.secondary)
-            
-        }
-    }
-}
-
-
 struct EmissionList: View {
     @Environment(\.presentationMode) var presentation
     
@@ -52,26 +20,70 @@ struct EmissionList: View {
     }
     var local = true
     
+    @State private var filter: String = ""
+    @State private var showFilter = false
+    
     var body: some View {
         NavigationView {
-            List {
-                ForEach(emissions.sorted(by: {
-                    (($0.emitentNameRus, $0.documentRus, $0.isinCode)
-                        < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
-                }), id: \.self) {
+            VStack {
+                TextField("Фильтр по названию выпуска, ISIN",
+                          text: $filter,
+                          onEditingChanged: { isEdited in
+                            
+                }) {
                     
-                    emission in
+                }
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding(.horizontal)
+                
+                //  apply filter if at least 2 symbols entered
+                if filter.count < 3 {
+                    List {
+                        ForEach(emissions.sorted(by: {
+                            (($0.emitentNameRus, $0.documentRus, $0.isinCode)
+                                < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
+                            
+                        }), id: \.self) { emission in
+                            
+                            EmissionRow(emission: emission)
+                        }
+                    }
                     
-                    EmissionRow(emission: emission)
+                } else {
+                    List {
+                        ForEach(emissions.sorted(by: {
+                            (($0.emitentNameRus, $0.documentRus, $0.isinCode)
+                                < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
+                        }).filter({ $0.documentRus.contains(self.filter) ||
+                            $0.documentRus.contains(self.filter.uppercased()) ||
+                            $0.documentRus.contains(self.filter.lowercased()) ||
+                            $0.documentRus.contains(self.filter.capitalized) ||
+                            $0.isinCode.contains(self.filter.uppercased()) ||
+                            $0.isinCode.contains(self.filter.lowercased()) ||
+                            $0.isinCode.contains(self.filter.capitalized)
+                            
+                        }), id: \.self) { emission in
+                            
+                            EmissionRow(emission: emission)
+                        }
+                    }
                 }
             }
             .navigationBarTitle("Выпуски")
                 
-            .navigationBarItems(trailing: Button(action: {
-                self.presentation.wrappedValue.dismiss()
+            .navigationBarItems(leading: Button(action: {
+                self.showFilter = true
             }) {
-                Text("Закрыть")
+                Image(systemName: "line.horizontal.3.decrease.circle")
+                },
+                                trailing: Button(action: {
+                                    self.presentation.wrappedValue.dismiss()
+                                }) {
+                                    Text("Закрыть")
             })
+                
+                .sheet(isPresented: $showFilter,
+                       content: { EmitentFilter(selectedEmitent: self.$filter) })
         }
     }
 }
