@@ -41,4 +41,17 @@ struct EmissionStructure: Codable, Hashable {
         self.emitentFullNameRus = from.emitentFullNameRus ?? ""
         self.documentRus = from.documentRus ?? ""
     }
+    
+    init() {
+        self.id = 987
+        self.isinCode = "111222XXXJJJ888"
+        self.emitentNameRus = "Тестовый эмитент"
+        self.maturityDate = Date().addWeeks(10)
+        self.cupon_rus = "Ставка купона"
+        self.cupon_period = 90
+        self.emitentID = 54321
+        self.emissionEmitentID = 54321
+        self.emitentFullNameRus = "Полное название тестового эмитента"
+        self.documentRus = "ЭЭ-01АА"
+    }
 }

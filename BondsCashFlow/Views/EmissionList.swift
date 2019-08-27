@@ -10,17 +10,18 @@ import SwiftUI
 
 struct EmissionList: View {
     @Environment(\.presentationMode) var presentation
+    @EnvironmentObject var userData: UserData
     
-    var emissions: [EmissionStructure] {
-        if local {
-            return loadEmissionListData()
-        } else {
-            return []
-        }
-    }
+    //    var emissions: [EmissionStructure] {
+    //        if local {
+    //            return loadEmissionListData()
+    //        } else {
+    //            return []
+    //        }
+    //    }
     var local = true
     
-    @State private var filter: String = ""
+    @State private var filter: String = "460" //5165
     @State private var showFilter = false
     
     var body: some View {
@@ -39,7 +40,7 @@ struct EmissionList: View {
                 //  apply filter if at least 2 symbols entered
                 if filter.count < 3 {
                     List {
-                        ForEach(emissions.sorted(by: {
+                        ForEach(userData.emissions.sorted(by: {
                             (($0.emitentNameRus, $0.documentRus, $0.isinCode)
                                 < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
                             
@@ -51,16 +52,18 @@ struct EmissionList: View {
                     
                 } else {
                     List {
-                        ForEach(emissions.sorted(by: {
+                        ForEach(userData.emissions.sorted(by: {
                             (($0.emitentNameRus, $0.documentRus, $0.isinCode)
                                 < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
                         }).filter({ $0.documentRus.contains(self.filter) ||
                             $0.documentRus.contains(self.filter.uppercased()) ||
                             $0.documentRus.contains(self.filter.lowercased()) ||
                             $0.documentRus.contains(self.filter.capitalized) ||
+                            $0.isinCode.contains(self.filter) ||
                             $0.isinCode.contains(self.filter.uppercased()) ||
                             $0.isinCode.contains(self.filter.lowercased()) ||
-                            $0.isinCode.contains(self.filter.capitalized)
+                            $0.isinCode.contains(self.filter.capitalized) ||
+                            $0.id == Int(filter) ?? -1
                             
                         }), id: \.self) { emission in
                             
@@ -91,5 +94,6 @@ struct EmissionList: View {
 struct EmissionList_Previews: PreviewProvider {
     static var previews: some View {
         EmissionList()
+            .environmentObject(UserData())
     }
 }

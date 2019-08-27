@@ -8,11 +8,25 @@
 
 import SwiftUI
 
-struct EmissionRow: View {
+struct EmissionSubRow: View {
+    //    @EnvironmentObject var userData: UserData
+    
     var emission: EmissionStructure
     
     var body: some View {
         VStack(alignment: .leading, spacing: 3) {
+            HStack {
+                Text("id: " + emission.id.formattedGrouped)
+                
+                Spacer()
+                
+                Text(emission.emitentNameRus)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .font(.caption)
+            .foregroundColor(.secondary)
+            
+            
             Text(emission.documentRus)
             
             HStack(alignment: .firstTextBaseline) {
@@ -20,9 +34,6 @@ struct EmissionRow: View {
                     Text(emission.isinCode.isEmpty ? "isin -" : emission.isinCode)
                     
                     Text("emitentID " + emission.emitentID.formattedGrouped)
-                    
-                    Text(emission.emitentNameRus)
-                        .fixedSize(horizontal: false, vertical: true)
                 }
                 
                 VStack(alignment: .leading) {
@@ -34,13 +45,33 @@ struct EmissionRow: View {
             }
             .font(.subheadline)
             .foregroundColor(.secondary)
-            
         }
+        
     }
 }
 
-//struct EmissionRow_Previews: PreviewProvider {
-//    static var previews: some View {
-//        EmissionRow(EmissionStructure())
-//    }
-//}
+struct EmissionRow: View {
+    @EnvironmentObject var userData: UserData
+    
+    var emission: EmissionStructure
+    @State private var showDetail = false
+    
+    var body: some View {
+        EmissionSubRow(emission: emission)
+            //            .environmentObject(userData)
+            .onTapGesture {
+                self.showDetail = true
+        }
+            
+        .sheet(isPresented: $showDetail, content: { EmissionDetail(emission: self.emission)
+        .environmentObject(self.userData)
+        })
+    }
+}
+
+struct EmissionRow_Previews: PreviewProvider {
+    static var previews: some View {
+        EmissionRow(emission: EmissionStructure())
+            .environmentObject(UserData())
+    }
+}

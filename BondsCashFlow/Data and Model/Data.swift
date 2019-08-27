@@ -14,15 +14,21 @@ let cashFlowData = loadCashFlowData()
 
 let emissionListData = loadEmissionListData()
 
-struct Emission: Identifiable, Codable, Hashable {
-    var id = UUID()
+let cashFlowListData = loadCashFlowListData()
+
+func loadCashFlowListData() -> [CashFlowStructure] {
+    let decoder = JSONDecoder()
+    let filenameURL = URL(fileURLWithPath: "flow",
+                          relativeTo: FileManager.documentDirectoryURL)
+        .appendingPathExtension("json")
     
-    var emitentNameRus: String
-    var emitentFullNameRus: String
-    
-    init(emitentNameRus: String, emitentFullNameRus: String) {
-        self.emitentNameRus = emitentNameRus
-        self.emitentFullNameRus = emitentFullNameRus
+    do {
+        let data = try Data(contentsOf: filenameURL)
+        return try decoder.decode([CashFlowStructure].self, from: data)
+    }
+    catch let error {
+        print("Error: \(error.localizedDescription)")
+        return []
     }
 }
 

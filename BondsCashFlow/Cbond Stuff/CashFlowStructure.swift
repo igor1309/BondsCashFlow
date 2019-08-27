@@ -63,5 +63,20 @@ struct CashFlowStructure: Codable, Hashable {
         //        self.redemptionEurobondsNominal = Double(from.redemptionEurobondsNominal ?? "") ?? -1
         //        self.redemptionIntegralMultiple = Double(from.redemptionIntegralMultiple ?? "") ?? -1
     }
+    
+    init() {
+        self.id = 676832
+        self.emissionID = 987654321
+        self.emissionIsinCode = "111222XXXJJJ888"
+        self.emissionEmitentID = 54321
+        self.date = Date().addWeeks(5)
+        self.startDate = Date().addWeeks(1)
+        self.couponNum = 11
+        self.cuponRate = 0.111
+        self.cuponRateDate = Date().addWeeks(3)
+        self.cuponSum = 12678
+        self.daysBeetwenCoupons = 90
+        self.redemtion = 33333
+        self.updatingDate = Date()
+    }
 }
-

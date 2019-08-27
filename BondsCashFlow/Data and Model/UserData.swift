@@ -15,6 +15,8 @@ final class UserData: ObservableObject {
     
     @Published var emissions = emissionListData
     
+    @Published var flows = cashFlowListData
+    
     @Published var portfolios: [Portfolio] = portfolioData {
         didSet {
             saveJSON(data: portfolios, filename: "portfolios.json")
