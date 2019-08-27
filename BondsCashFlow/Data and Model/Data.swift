@@ -12,6 +12,40 @@ let portfolioData = loadPortfolioData()
 
 let cashFlowData = loadCashFlowData()
 
+let emissionListData = loadEmissionListData()
+
+struct Emission: Identifiable, Codable, Hashable {
+    var id = UUID()
+    
+    var emitentNameRus: String
+    var emitentFullNameRus: String
+    
+    init(emitentNameRus: String, emitentFullNameRus: String) {
+        self.emitentNameRus = emitentNameRus
+        self.emitentFullNameRus = emitentFullNameRus
+    }
+}
+
+func loadEmissionListData() -> [EmissionStructure] {
+    guard let data: [EmissionStructure] = loadFromDocDir("emissionlist.json") else {
+        
+        let decoder = JSONDecoder()
+        let filenameURL = URL(fileURLWithPath: "emissions",
+                              relativeTo: FileManager.documentDirectoryURL)
+            .appendingPathExtension("json")
+        
+        do {
+            let data = try Data(contentsOf: filenameURL)
+            return try decoder.decode([EmissionStructure].self, from: data)
+        }
+        catch let error {
+            print("Error: \(error.localizedDescription)")
+            return []
+        }
+    }
+    
+    return data
+}
 
 func loadPortfolioData() -> [Portfolio] {
     guard let data: [Portfolio] = loadFromDocDir("porfolios.json") else {
@@ -27,7 +61,6 @@ func loadPortfolioData() -> [Portfolio] {
                         Position(isin: "RU000A100HW3", qty: 10),
                         Position(isin: "RU000A100E70", qty: 1)
             ])
-
         ]
     }
     

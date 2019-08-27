@@ -9,13 +9,19 @@
 import SwiftUI
 
 struct EmissionStructure: Codable, Hashable {
+    let id: Int // Уникальный идентификатор long
     let isinCode: String // Код ISIN Varchar
     let emitentNameRus: String // Эмитент (rus) Varchar
     let maturityDate: Date // Дата погашения Date
     let cupon_rus: String // Ставка купона (rus) Varchar
     let cupon_period: Int // Периодичность выплаты купона Int
+    let emitentID: Int // Эмитент long | совпадает с emissionEmitentID
+    let emissionEmitentID: Int // Эмитент (id) long | совпадает с emitentID
+    let emitentFullNameRus: String // Полное название эмитента (rus) Varchar
+    let documentRus: String // Название эмиссии (rus) Varchar
     
     init(from: CBondEmission) {
+        self.id = Int(from.id) ?? -1
         self.isinCode = from.isinCode
         self.emitentNameRus = from.emitentNameRus
         
@@ -30,5 +36,9 @@ struct EmissionStructure: Codable, Hashable {
         }
         self.cupon_rus = from.cuponRus
         self.cupon_period = Int(from.cuponPeriod ?? "") ?? 0
+        self.emitentID = Int(from.emitentID ?? "-1") ?? -1
+        self.emissionEmitentID = Int(from.emissionEmitentID ?? "-1") ?? -1
+        self.emitentFullNameRus = from.emitentFullNameRus ?? ""
+        self.documentRus = from.documentRus ?? ""
     }
 }

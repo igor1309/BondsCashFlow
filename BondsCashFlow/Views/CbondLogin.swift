@@ -13,40 +13,48 @@ struct CbondLogin: View {
     
     @Binding var login: String
     @Binding var password: String
-    @State var footer = "Тестовый доступ по test:test"
+    var footer: String {
+        (login.isNotEmpty && password.isNotEmpty) ? "" : "Логин-пароль не могут быть пустыми"
+    }
+    //  MARK: - TODO: prevent dismiss by swipe with empty fields
     
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Доступ к cbonds.ru".uppercased()),
-                                     footer: Text(footer)
+                Section(header: Text("Логин-пароль к cbonds.ru".uppercased()),
+                        footer: Text(footer).foregroundColor(.systemRed)
                 ){
                     TextField("Логин", text: $login)
                     TextField("Пароль", text: $password)
                 }
                 
-                if !(login == "test" && password == "test") {
-                    Button(action: {
-                        self.login = "test"
-                        self.password = "test"
-                        self.footer = "Тестовый доступ по test:test"
-                    }) {
-                        Text("Сбросить")
+                Section(header: Text("Доступ к cbonds.ru".uppercased())
+                ){
+                    if !(login == "test" && password == "test") {
+                        Button(action: {
+                            self.login = "test"
+                            self.password = "test"
+                        }) {
+                            Text("Тестовый доступ")
+                        }
                     }
-                } else {
-                    /*@START_MENU_TOKEN@*/EmptyView()/*@END_MENU_TOKEN@*/
+                    
+                    if !(login == "igor@rbiz.group" && password == "bonmaM-wojhed-fokza3") {
+                        Button(action: {
+                            self.login = "igor@rbiz.group"
+                            self.password = "bonmaM-wojhed-fokza3"
+                            
+                        }) {
+                            Text("igor@rbiz.group")
+                        }
+                    }
                 }
-                
             }
             .navigationBarTitle("Логин-пароль")
                 
             .navigationBarItems(trailing: Button(action: {
                 //  MARK: - add actions
-                if self.login.isNotEmpty && self.password.isNotEmpty {
-                    self.presentation.wrappedValue.dismiss()
-                } else {
-                    self.footer = "Логин-пароль не могут быть пустыми"
-                }
+                self.presentation.wrappedValue.dismiss()
             }) {
                 Text("Закрыть")
             })

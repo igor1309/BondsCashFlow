@@ -15,9 +15,13 @@ enum CBondError: Error {
 //  MARK: - TODO: add filters to query
 //  MARK: - TODO: finish coding background operation
 
-func cbondFetch(login: String = "test", password: String = "test",
-                limit: Int = 10, offset: Int = 0,
-                cbondOperation: String = "get_flow", background: Bool = false) throws {
+func cbondFetch(login: String = "igor@rbiz.group",
+                password: String = "bonmaM-wojhed-fokza3",
+                filters: String,
+                limit: Int = 10,
+                offset: Int = 0,
+                cbondOperation: String = "get_flow",
+                background: Bool = false) throws {
     
     //  could handle just "get_flow" (потоки платежей) or "get_emissions" (параметры эмиссий)
     if !(cbondOperation == "get_flow" || cbondOperation == "get_emissions") {
@@ -30,7 +34,7 @@ func cbondFetch(login: String = "test", password: String = "test",
     var request = URLRequest(url: url)
     request.httpMethod = "Post"
     
-    let json = "{\"auth\":{\"login\":\"\(login)\",\"password\":\"\(password)\"},\"quantity\":{\"limit\":" + String(limit) + ",\"offset\":" + String(offset) + "}}"
+    let json = "{\"auth\":{\"login\":\"\(login)\",\"password\":\"\(password)\"},\(filters)\"quantity\":{\"limit\":" + String(limit) + ",\"offset\":" + String(offset) + "}}"
     request.httpBody = json.data(using: .utf8)
     
     

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var userData: UserData
-    @State private var selection = 1
+    @State private var selection = 2
     
     var body: some View {
         TabView(selection: $selection){
@@ -31,8 +31,8 @@ struct ContentView: View {
             }
             .tabItem {
                 VStack {
-                    Image(systemName: "briefcase.fill")
-                    Text("Портфели")
+                    Image(systemName: "chart.bar.fill")
+                    Text("Позиции")
                 }
             }
             .tag(1)

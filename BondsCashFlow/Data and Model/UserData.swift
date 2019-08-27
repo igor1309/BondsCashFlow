@@ -13,6 +13,8 @@ import Foundation
 final class UserData: ObservableObject {
     private let defaults = UserDefaults.standard
     
+    @Published var emissions = emissionListData
+    
     @Published var portfolios: [Portfolio] = portfolioData {
         didSet {
             saveJSON(data: portfolios, filename: "portfolios.json")

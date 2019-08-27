@@ -60,6 +60,7 @@
 		2AAF74EF23141CCA0081ED38 /* Potfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AAF74EE23141CCA0081ED38 /* Potfolio.swift */; };
 		2AF7404D231490C0009294DA /* PositionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF7404C231490C0009294DA /* PositionRow.swift */; };
 		2AF7404F2314914D009294DA /* PositionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF7404E2314914D009294DA /* PositionDetail.swift */; };
+		2AF74051231533A5009294DA /* EmissionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF74050231533A5009294DA /* EmissionList.swift */; };
 		2AFA835A2313082000A30A28 /* EmissionStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFA83592313082000A30A28 /* EmissionStructure.swift */; };
 /* End PBXBuildFile section */
 
@@ -119,6 +120,7 @@
 		2AAF74EE23141CCA0081ED38 /* Potfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Potfolio.swift; sourceTree = "<group>"; };
 		2AF7404C231490C0009294DA /* PositionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionRow.swift; sourceTree = "<group>"; };
 		2AF7404E2314914D009294DA /* PositionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionDetail.swift; sourceTree = "<group>"; };
+		2AF74050231533A5009294DA /* EmissionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmissionList.swift; sourceTree = "<group>"; };
 		2AFA83592313082000A30A28 /* EmissionStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmissionStructure.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -251,6 +253,7 @@
 				2A772CB82311E64A00ABF2C3 /* PotfolioFilter.swift */,
 				2AF7404C231490C0009294DA /* PositionRow.swift */,
 				2A6EC88B2312BB1A00A62B23 /* Catalogue.swift */,
+				2AF74050231533A5009294DA /* EmissionList.swift */,
 				2A45EB5F2312A9AA00DC7B28 /* CbondLogin.swift */,
 				2A45EB5D2312A77500DC7B28 /* Settings.swift */,
 			);
@@ -384,6 +387,7 @@
 				2A772CA12311E4C800ABF2C3 /* TimelineView.swift in Sources */,
 				2A772C922311E4C800ABF2C3 /* CashFlowTimeline.swift in Sources */,
 				2A6EC8A02312C35500A62B23 /* cbondFetch.swift in Sources */,
+				2AF74051231533A5009294DA /* EmissionList.swift in Sources */,
 				2AF7404F2314914D009294DA /* PositionDetail.swift in Sources */,
 				2A772C962311E4C800ABF2C3 /* TableInCell.swift in Sources */,
 				2A6EC88E2312C0D700A62B23 /* Extension+Array.swift in Sources */,
