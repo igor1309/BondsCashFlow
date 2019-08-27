@@ -21,6 +21,7 @@ struct EmissionList: View {
     
     @State private var filter: String = "" {
         didSet {
+            print("filter was set")
             //  apply filter if at least 2 symbols entered
             if filter.count < 2 {
                 filteredEmissions = userData.emissions.sorted(by: {
@@ -47,7 +48,7 @@ struct EmissionList: View {
         }
     }
     
-    @State private var preFilter: String = "460"
+    @State private var preFilter: String = ""
     @State private var showFilter = false
     
     @State private var emissionsCount: Int = loadEmissionListData().count
@@ -65,7 +66,7 @@ struct EmissionList: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.horizontal)
                 
-                Text("\(emissionsCount.formattedGrouped) выпусков, \(emitemtsCount.formattedGrouped) эмитентов.")
+                Text("\(emissionsCount.formattedGrouped) выпуска/ов, \(emitemtsCount.formattedGrouped) эмитент/а/ов")
                     //  MARK: - одна из обций должна работать - не обрезать текст
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
@@ -82,19 +83,30 @@ struct EmissionList: View {
             }
             .navigationBarTitle("Эмиссии")
                 
-            .navigationBarItems(leading: Button(action: {
-                self.showFilter = true
-            }) {
-                Image(systemName: "line.horizontal.3.decrease.circle")
+            .navigationBarItems(
+                leading: Button(action: {
+                    self.showFilter = true
+                }) {
+                    Image(systemName: "line.horizontal.3.decrease.circle")
                 },
-                                trailing: Button(action: {
-                                    self.presentation.wrappedValue.dismiss()
-                                }) {
-                                    Text("Закрыть")
+                
+                trailing: Button(action: {
+                    self.presentation.wrappedValue.dismiss()
+                }) {
+                    Text("Закрыть")
             })
                 
+                //  по свайпу закрывания модала работает
+                //  фильт меняется и didSet происходит
+                //  и обновляется таблица, но
+                //  не работает когда в EmitentFilter вызывается self.presentation.wrappedValue.dismiss()
+                //  либо баг либо нет
+                //  решения пока не видно
                 .sheet(isPresented: $showFilter,
-                       content: { EmitentFilter(filter: self.$filter) })
+                       onDismiss: {
+                        self.filter = self.preFilter
+                },
+                       content: { EmitentFilter(filter: self.$preFilter) })
         }
     }
 }
