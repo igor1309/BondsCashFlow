@@ -66,7 +66,7 @@ struct CashFlowStructure: Codable, Hashable {
     
     init() {
         self.id = 676832
-        self.emissionID = 987654321
+        self.emissionID = 987987
         self.emissionIsinCode = "111222XXXJJJ888"
         self.emissionEmitentID = 54321
         self.date = Date().addWeeks(5)

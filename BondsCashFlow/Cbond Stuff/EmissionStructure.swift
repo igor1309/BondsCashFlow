@@ -43,7 +43,7 @@ struct EmissionStructure: Codable, Hashable {
     }
     
     init() {
-        self.id = 987
+        self.id = 987987
         self.isinCode = "111222XXXJJJ888"
         self.emitentNameRus = "Тестовый эмитент"
         self.maturityDate = Date().addWeeks(10)

@@ -16,8 +16,8 @@ struct EmissionList: View {
     
     @State private var filterType: FilterType = .all
     
-    private enum FilterType {
-        case all, emitent, complex
+    private enum FilterType: String, CaseIterable {
+        case all, emitent, withFlows, complex
     }
     
     @State private var filteredEmissions: [EmissionStructure] = loadEmissionListData().sorted(by: {
@@ -25,6 +25,8 @@ struct EmissionList: View {
             < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
     })
     
+    //    private var emissionsWithFlows: [Int: Bool] = Dictionary(uniqueKeysWithValues: loadCashFlowListData().map { $0.emissionID }.removingDuplicates().map { ($0, true) })
+    //
     @State private var filter: String = ""
         {
         didSet {
@@ -37,17 +39,14 @@ struct EmissionList: View {
                         < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
                 })
             case .emitent:
-                filteredEmissions = userData.emissions.sorted(by: {
+                filteredEmissions = userData.emissions.filter({
+                    $0.emitentNameRus == filter
+                }).sorted(by: {
                     (($0.emitentNameRus, $0.documentRus, $0.isinCode)
                         < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
-                }).filter({
-                    $0.emitentNameRus == filter
                 })
             case .complex:
-                filteredEmissions = userData.emissions.sorted(by: {
-                    (($0.emitentNameRus, $0.documentRus, $0.isinCode)
-                        < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
-                }).filter({
+                filteredEmissions = userData.emissions.filter({
                     $0.documentRus.contains(self.filter) ||
                         $0.documentRus.contains(self.filter.uppercased()) ||
                         $0.documentRus.contains(self.filter.lowercased()) ||
@@ -57,7 +56,19 @@ struct EmissionList: View {
                         $0.isinCode.contains(self.filter.lowercased()) ||
                         $0.isinCode.contains(self.filter.capitalized) ||
                         $0.id == Int(filter) ?? -1
+                }).sorted(by: {
+                    (($0.emitentNameRus, $0.documentRus, $0.isinCode)
+                        < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
                 })
+            case .withFlows:
+                filteredEmissions = userData.emissions
+                    .filter({ emission in
+                        userData.flows.map { $0.emissionID }.contains(emission.id)
+                    })
+                    .sorted(by: {
+                        (($0.emitentNameRus, $0.documentRus, $0.isinCode)
+                            < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
+                    })
             }
             
             emissionsCount = filteredEmissions.count
@@ -89,6 +100,14 @@ struct EmissionList: View {
                 })
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
+                
+                Picker(selection: $filterType, label: Text("")) {
+                    ForEach(FilterType.allCases, id: \.self) { type in
+                        Text(type.rawValue).tag(type)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(.horizontal)
                 
                 Text("\(emissionsCount.formattedGrouped) выпуск/а/ов, \(emitemtsCount.formattedGrouped) эмитент/а/ов")
                     //  MARK: - одна из обций должна работать - не обрезать текст

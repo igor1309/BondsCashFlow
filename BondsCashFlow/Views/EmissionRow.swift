@@ -9,32 +9,34 @@
 import SwiftUI
 
 struct EmissionSubRow: View {
-    //    @EnvironmentObject var userData: UserData
-    
+    @EnvironmentObject var userData: UserData
     var emission: EmissionStructure
+    var bigStar: Bool = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 3) {
-            HStack {
-                Text("id: " + emission.id.formattedGrouped)
+            HStack(alignment: .firstTextBaseline) {
+                Text(String(emission.id))
+                
+                Text(emission.isinCode.isEmpty ? "" : emission.isinCode)
                 
                 Spacer()
                 
+                //                Text("emitentID " + String(emission.emitentID))
                 Text(emission.emitentNameRus)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .font(.caption)
-            .foregroundColor(.secondary)
+            .foregroundColor(.systemOrange)
             
             
             Text(emission.documentRus)
+                .fixedSize(horizontal: false, vertical: true)
             
             HStack(alignment: .firstTextBaseline) {
-                VStack(alignment: .leading) {
-                    Text(emission.isinCode.isEmpty ? "isin -" : emission.isinCode)
-                    
-                    Text("emitentID " + emission.emitentID.formattedGrouped)
-                }
+                Image(systemName: userData.favoriteEmissions[emission.id] ?? false ? "star.fill" : "star")
+                    .foregroundColor(.systemOrange)
+                    .imageScale(bigStar ? .large : .medium)
                 
                 VStack(alignment: .leading) {
                     Text("cupon_period " + emission.cupon_period.formattedGrouped)
@@ -63,8 +65,10 @@ struct EmissionRow: View {
                 self.showDetail = true
         }
             
-        .sheet(isPresented: $showDetail, content: { EmissionDetail(emission: self.emission)
-        .environmentObject(self.userData)
+        .sheet(isPresented: $showDetail,
+               content: {EmissionDetail(emission: self.emission,
+                                        isFav: self.userData.favoriteEmissions[self.emission.id] ?? false)
+                .environmentObject(self.userData)
         })
     }
 }

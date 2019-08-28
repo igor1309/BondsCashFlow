@@ -22,11 +22,30 @@ struct EmissionDetail: View {
     //        loadCashFlowListData().filter({ $0.emissionID == emission.id })
     //    }
     
+    @State private var isFavorite: Bool// = false
+        {
+        didSet {
+            userData.favoriteEmissions.updateValue(isFavorite, forKey: emission.id)
+        }
+    }
+    
+    var isFav: Bool
+    init(emission: EmissionStructure, isFav: Bool) {
+        self.emission = emission
+        self.isFav = isFav
+        self._isFavorite = State(initialValue: isFav)
+    }
+    
     var body: some View {
-        NavigationView {
+//        isFavorite = userData.favoriteEmissions[emission.id] ?? false
+        
+        return NavigationView {
             VStack(alignment: .leading) {
-                EmissionSubRow(emission: emission)
+                EmissionSubRow(emission: emission, bigStar: true)
                     .padding()
+                    .onTapGesture {
+                        self.isFavorite.toggle()
+                }
                 
                 Text("Потоки")
                     .font(.title)
@@ -54,7 +73,8 @@ struct EmissionDetail: View {
 
 struct EmissionDetail_Previews: PreviewProvider {
     static var previews: some View {
-        EmissionDetail(emission: EmissionStructure())
+        EmissionDetail(emission: EmissionStructure(),
+                       isFav: true)
             .environmentObject(UserData())
     }
 }

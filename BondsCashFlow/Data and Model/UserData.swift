@@ -17,6 +17,12 @@ final class UserData: ObservableObject {
     
     @Published var flows = cashFlowListData
     
+    @Published var favoriteEmissions: [Int: Bool] = favoriteEmissionsData {
+        didSet {
+            saveJSON(data: favoriteEmissions, filename: "favoriteEmissions.json")
+        }
+    }
+    
     @Published var portfolios: [Portfolio] = portfolioData {
         didSet {
             saveJSON(data: portfolios, filename: "portfolios.json")

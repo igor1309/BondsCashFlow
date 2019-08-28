@@ -8,6 +8,24 @@
 
 import SwiftUI
 
+let favoriteEmissionsData = loadFavoriteEmissionsData()
+
+func loadFavoriteEmissionsData() -> [Int: Bool] {
+    let decoder = JSONDecoder()
+    let filenameURL = URL(fileURLWithPath: "favoriteEmissions",
+                          relativeTo: FileManager.documentDirectoryURL)
+        .appendingPathExtension("json")
+    
+    do {
+        let data = try Data(contentsOf: filenameURL)
+        return try decoder.decode([Int: Bool].self, from: data)
+    }
+    catch let error {
+        print("Error: \(error.localizedDescription)")
+        return [:]
+    }
+}
+
 let portfolioData = loadPortfolioData()
 
 let cashFlowData = loadCashFlowData()
