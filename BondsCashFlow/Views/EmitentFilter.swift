@@ -12,7 +12,7 @@ struct EmitentFilter: View {
     @Environment(\.presentationMode) var presentation
     @Binding var filter: String
     @Binding var preFilter: String
-//    @State private var selectedEmitent: String = loadEmissionListData().map({ $0.emitentNameRus }).removingDuplicates().sorted()[0]
+    //    @State private var selectedEmitent: String = loadEmissionListData().map({ $0.emitentNameRus }).removingDuplicates().sorted()[0]
     
     var emitents: [String] {
         loadEmissionListData().map({ $0.emitentNameRus }).removingDuplicates().sorted()
@@ -22,18 +22,24 @@ struct EmitentFilter: View {
         //  фильтр по эмитенту
         NavigationView {
             Form {
-                Text("Эмитент")
-                Picker(selection: $preFilter, label: Text("")//Фильтр по эмитенту")
+                Section(header: Text("Эмитент".uppercased())
                 ){
-                    ForEach(emitents, id: \.self){ name in
-                        Text(name).tag(name)
+                    Picker(selection: $preFilter, label: Text("")//Фильтр по эмитенту")
+                    ){
+                        ForEach(emitents, id: \.self){ name in
+                            Text(name).tag(name)
+                        }
                     }
+                    .pickerStyle(WheelPickerStyle())
                 }
-                .pickerStyle(WheelPickerStyle())
                 
-                //  MARK: - TODO do it
-                Toggle(isOn: .constant(true)) {
-                    Text("TBD: Только выпуски с потоками").foregroundColor(.systemRed)
+                Section(header: Text("Дополнительно".uppercased())
+                ){
+                    
+                    //  MARK: - TODO do it
+                    Toggle(isOn: .constant(true)) {
+                        Text("TBD: Только выпуски с потоками").foregroundColor(.systemRed)
+                    }
                 }
             }
                 
@@ -41,15 +47,15 @@ struct EmitentFilter: View {
                 
             .navigationBarItems(trailing: Button(action: {
                 //  MARK: - add actions
-//                print("filter: " + self.filter)
-//                print("selectedEmitent: " + self.selectedEmitent)
-//                self.filter = self.selectedEmitent
+                //                print("filter: " + self.filter)
+                //                print("selectedEmitent: " + self.selectedEmitent)
+                //                self.filter = self.selectedEmitent
                 self.presentation.wrappedValue.dismiss()
                 self.filter = self.preFilter
-
-//                print("filter: " + self.filter)
-//                print("selectedEmitent: " + self.selectedEmitent)
-
+                
+                //                print("filter: " + self.filter)
+                //                print("selectedEmitent: " + self.selectedEmitent)
+                
             }) {
                 Text("Закрыть")
             })

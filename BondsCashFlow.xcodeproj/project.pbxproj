@@ -23,6 +23,7 @@
 		2A6EC89C2312C24700A62B23 /* readCbondJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6EC89B2312C24700A62B23 /* readCbondJSON.swift */; };
 		2A6EC89E2312C2C000A62B23 /* CashFlowStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6EC89D2312C2C000A62B23 /* CashFlowStructure.swift */; };
 		2A6EC8A02312C35500A62B23 /* cbondFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6EC89F2312C35500A62B23 /* cbondFetch.swift */; };
+		2A7372A82315E65D0078EE3E /* Int+RusGrammar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7372A72315E65D0078EE3E /* Int+RusGrammar+Extension.swift */; };
 		2A772C672311E47500ABF2C3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A772C662311E47500ABF2C3 /* AppDelegate.swift */; };
 		2A772C692311E47500ABF2C3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A772C682311E47500ABF2C3 /* SceneDelegate.swift */; };
 		2A772C6D2311E47500ABF2C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A772C6C2311E47500ABF2C3 /* Assets.xcassets */; };
@@ -85,6 +86,7 @@
 		2A6EC89B2312C24700A62B23 /* readCbondJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = readCbondJSON.swift; sourceTree = "<group>"; };
 		2A6EC89D2312C2C000A62B23 /* CashFlowStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CashFlowStructure.swift; sourceTree = "<group>"; };
 		2A6EC89F2312C35500A62B23 /* cbondFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cbondFetch.swift; sourceTree = "<group>"; };
+		2A7372A72315E65D0078EE3E /* Int+RusGrammar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+RusGrammar+Extension.swift"; sourceTree = "<group>"; };
 		2A772C632311E47500ABF2C3 /* BondsCashFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BondsCashFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A772C662311E47500ABF2C3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A772C682311E47500ABF2C3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				2A772CA42311E5AC00ABF2C3 /* String+Extensions.swift */,
 				2A6EC88D2312C0D700A62B23 /* Extension+Array.swift */,
 				2A6EC88F2312C0F900A62B23 /* Extension+FileManager.swift */,
+				2A7372A72315E65D0078EE3E /* Int+RusGrammar+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -391,6 +394,7 @@
 				2AAF74ED23141C470081ED38 /* WorkWithJSON.swift in Sources */,
 				2A6EC8902312C0F900A62B23 /* Extension+FileManager.swift in Sources */,
 				2A772C932311E4C800ABF2C3 /* CashFlowView.swift in Sources */,
+				2A7372A82315E65D0078EE3E /* Int+RusGrammar+Extension.swift in Sources */,
 				2A45EB602312A9AA00DC7B28 /* CbondLogin.swift in Sources */,
 				2A772CA02311E4C800ABF2C3 /* UserData.swift in Sources */,
 				2A772CBB2311E64A00ABF2C3 /* PortfolioView.swift in Sources */,

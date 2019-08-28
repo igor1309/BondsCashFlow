@@ -14,19 +14,57 @@ struct EmissionList: View {
     
     var local = true
     
-//    @State private var filteredEmissions: [EmissionStructure] = loadEmissionListData().sorted(by: {
-//        (($0.emitentNameRus, $0.documentRus, $0.isinCode)
-//            < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
-//    })
+    @State private var filterType: FilterType = .all
+    
+    private enum FilterType {
+        case all, emitent, complex
+    }
+    
+    @State private var filteredEmissions: [EmissionStructure] = loadEmissionListData().sorted(by: {
+        (($0.emitentNameRus, $0.documentRus, $0.isinCode)
+            < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
+    })
     
     @State private var filter: String = ""
-//        {
-//        didSet {
-//            print("filter was set")
-//            emissionsCount = filteredEmissions.count
-//            emitemtsCount = filteredEmissions.map({ $0.emitentID }).removingDuplicates().count
-//        }
-//    }
+        {
+        didSet {
+            print("filter was set")
+            
+            switch filterType {
+            case .all:
+                filteredEmissions = userData.emissions.sorted(by: {
+                    (($0.emitentNameRus, $0.documentRus, $0.isinCode)
+                        < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
+                })
+            case .emitent:
+                filteredEmissions = userData.emissions.sorted(by: {
+                    (($0.emitentNameRus, $0.documentRus, $0.isinCode)
+                        < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
+                }).filter({
+                    $0.emitentNameRus == filter
+                })
+            case .complex:
+                filteredEmissions = userData.emissions.sorted(by: {
+                    (($0.emitentNameRus, $0.documentRus, $0.isinCode)
+                        < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
+                }).filter({
+                    $0.documentRus.contains(self.filter) ||
+                        $0.documentRus.contains(self.filter.uppercased()) ||
+                        $0.documentRus.contains(self.filter.lowercased()) ||
+                        $0.documentRus.contains(self.filter.capitalized) ||
+                        $0.isinCode.contains(self.filter) ||
+                        $0.isinCode.contains(self.filter.uppercased()) ||
+                        $0.isinCode.contains(self.filter.lowercased()) ||
+                        $0.isinCode.contains(self.filter.capitalized) ||
+                        $0.id == Int(filter) ?? -1
+                })
+            }
+            
+            emissionsCount = filteredEmissions.count
+            emitemtsCount = filteredEmissions.map({ $0.emitentID }).removingDuplicates().count
+        }
+    }
+    
     
     @State private var preFilter: String = ""
     @State private var showFilter = false
@@ -40,13 +78,19 @@ struct EmissionList: View {
                 TextField("Фильтр по названию выпуска, ISIN",
                           text: $preFilter,
                           onEditingChanged: { isEdited in
-                }) {
-                    self.filter = self.preFilter
-                }
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.horizontal)
+                },
+                          onCommit: {
+                            if self.preFilter.count < 2 {
+                                self.filterType = .all
+                            } else {
+                                self.filterType = .complex
+                            }
+                            self.filter = self.preFilter
+                })
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding(.horizontal)
                 
-                Text("\(emissionsCount.formattedGrouped) выпуска/ов, \(emitemtsCount.formattedGrouped) эмитент/а/ов")
+                Text("\(emissionsCount.formattedGrouped) выпуск/а/ов, \(emitemtsCount.formattedGrouped) эмитент/а/ов")
                     //  MARK: - одна из обций должна работать - не обрезать текст
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
@@ -56,19 +100,7 @@ struct EmissionList: View {
                 
                 List {
                     //  apply filter if at least 2 symbols entered
-                    ForEach(userData.emissions.sorted(by: {
-                        (($0.emitentNameRus, $0.documentRus, $0.isinCode)
-                            < ($1.emitentNameRus, $0.documentRus, $1.isinCode))
-                    }).filter({ filter.count < 2 ? $0.documentRus != "" : $0.documentRus.contains(self.filter) ||
-                        $0.documentRus.contains(self.filter.uppercased()) ||
-                        $0.documentRus.contains(self.filter.lowercased()) ||
-                        $0.documentRus.contains(self.filter.capitalized) ||
-                        $0.isinCode.contains(self.filter) ||
-                        $0.isinCode.contains(self.filter.uppercased()) ||
-                        $0.isinCode.contains(self.filter.lowercased()) ||
-                        $0.isinCode.contains(self.filter.capitalized) ||
-                        $0.id == Int(filter) ?? -1
-                    }), id: \.self) { emission in
+                    ForEach(filteredEmissions, id: \.self) { emission in
                         
                         EmissionRow(emission: emission)
                     }
@@ -79,6 +111,7 @@ struct EmissionList: View {
             .navigationBarItems(
                 leading: Button(action: {
                     self.showFilter = true
+                    self.filterType = .emitent
                 }) {
                     Image(systemName: "line.horizontal.3.decrease.circle")
                 },
