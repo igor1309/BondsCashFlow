@@ -35,7 +35,7 @@ struct EmissionSubRow: View {
             
             HStack(alignment: .firstTextBaseline) {
                 Image(systemName: userData.favoriteEmissions[emission.id] ?? false ? "star.fill" : "star")
-                    .foregroundColor(.systemOrange)
+                    .foregroundColor(userData.favoriteEmissions[emission.id] ?? false ? .systemOrange : .systemGray)
                     .imageScale(bigStar ? .large : .medium)
                 
                 VStack(alignment: .leading) {

@@ -8,23 +8,22 @@
 
 import SwiftUI
 
+enum FilterType: String, CaseIterable {
+    case all = "все эмиссии"
+    case withFlows = "эмиссии с потоками"
+    //  MARK: TODO додумать и доделать
+    case emitent = "по эмитенту"
+    case byText = "по тексту"
+}
+
 struct EmissionList: View {
     @Environment(\.presentationMode) var presentation
     @EnvironmentObject var userData: UserData
     
     var local = true
     
-    @State private var preFilter: String = ""
     @State private var filter: String = ""
     @State private var filterType: FilterType = .withFlows
-    
-    private enum FilterType: String, CaseIterable {
-        case all = "Все"
-        case withFlows = "С потоками"
-        //  MARK: TODO додумать и доделать
-        case emitent = "Эмитент"
-        case complex = "Текст"
-    }
     
     @State private var showFilter = false
     
@@ -32,47 +31,30 @@ struct EmissionList: View {
     @State private var emissionsCount: Int = loadEmissionListData().count
     @State private var emitemtsCount: Int = loadEmissionListData().map({ $0.emitentID }).removingDuplicates().count
     
+    
+    
+    //    var emitents: [String] = loadEmissionListData().map({ $0.emitentNameRus }).removingDuplicates().sorted()
+    
+    
+    
+    
     var body: some View {
+        
         NavigationView {
             VStack(alignment: .leading) {
-                Picker(selection: $filterType, label: Text("")) {
-                    ForEach(FilterType.allCases, id: \.self) { type in
-                        Text(type.rawValue).tag(type)
-                    }
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(.horizontal)
                 
-                if filterType == FilterType.complex {
-                    TextField("Фильтр по названию выпуска, ISIN",
-                              text: $preFilter,
-                              onEditingChanged: { isEdited in
-                    },
-                              onCommit: {
-                                if self.preFilter.count < 2 {
-                                    self.filterType = .all
-                                } else {
-                                    self.filterType = .complex
-                                }
-                                self.filter = self.preFilter
-                    })
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal)
-                }
-                
-
                 //  MARK: TODO доделать
-//                Text("\(emissionsCount.formattedGrouped) выпуск/а/ов, \(emitemtsCount.formattedGrouped) эмитент/а/ов")
-//                    //  MARK: - одна из опций должна работать (не обрезать текст)
-//                    .lineLimit(nil)
-//                    .fixedSize(horizontal: false, vertical: true)
-//                    .foregroundColor(.secondary)
-//                    .font(.subheadline)
-//                    .padding(.horizontal)
-                
+                Text("TBD: … выпуск/а/ов, … эмитент/а/ов")
+                    .foregroundColor(.systemRed)
+                    //                Text("\(emissionsCount.formattedGrouped) выпуск/а/ов, \(emitemtsCount.formattedGrouped) эмитент/а/ов")
+                    //                    //  MARK: - одна из опций должна работать (не обрезать текст)
+                    //                    .lineLimit(nil)
+                    //                    .fixedSize(horizontal: false, vertical: true)
+                    //                    .foregroundColor(.secondary)
+                    .font(.caption)
+                    .padding(.horizontal)
                 
                 List {
-                    //  apply filter if at least 2 symbols entered
                     ForEach(userData.emissions.filter({
                         
                         switch filterType {
@@ -80,15 +62,15 @@ struct EmissionList: View {
                             return true
                         case .emitent:
                             return $0.emitentNameRus == filter
-                        case .complex:
-                            return $0.documentRus.contains(self.filter) ||
-                                $0.documentRus.contains(self.filter.uppercased()) ||
-                                $0.documentRus.contains(self.filter.lowercased()) ||
-                                $0.documentRus.contains(self.filter.capitalized) ||
-                                $0.isinCode.contains(self.filter) ||
-                                $0.isinCode.contains(self.filter.uppercased()) ||
-                                $0.isinCode.contains(self.filter.lowercased()) ||
-                                $0.isinCode.contains(self.filter.capitalized) ||
+                        case .byText:
+                            return $0.documentRus.contains(filter) ||
+                                $0.documentRus.contains(filter.uppercased()) ||
+                                $0.documentRus.contains(filter.lowercased()) ||
+                                $0.documentRus.contains(filter.capitalized) ||
+                                $0.isinCode.contains(filter) ||
+                                $0.isinCode.contains(filter.uppercased()) ||
+                                $0.isinCode.contains(filter.lowercased()) ||
+                                $0.isinCode.contains(filter.capitalized) ||
                                 $0.id == Int(filter) ?? -1
                         case .withFlows:
                             return userData.flows.map { $0.emissionID }.contains($0.id)
@@ -108,7 +90,6 @@ struct EmissionList: View {
             .navigationBarItems(
                 leading: Button(action: {
                     self.showFilter = true
-                    self.filterType = .emitent
                 }) {
                     Image(systemName: "line.horizontal.3.decrease.circle")
                 },
@@ -127,10 +108,11 @@ struct EmissionList: View {
                 //  решения пока не видно
                 .sheet(isPresented: $showFilter,
                        onDismiss: {
-                        self.filter = self.preFilter
                 },
-                       content: { EmitentFilter(filter: self.$filter,
-                                                preFilter: self.$preFilter) })
+                       content: { EmitentFilter(filterType: self.$filterType,
+                                                filter: self.$filter)
+                        .environmentObject(self.userData)
+                })
         }
     }
 }

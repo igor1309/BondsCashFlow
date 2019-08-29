@@ -10,52 +10,69 @@ import SwiftUI
 
 struct EmitentFilter: View {
     @Environment(\.presentationMode) var presentation
-    @Binding var filter: String
-    @Binding var preFilter: String
-    //    @State private var selectedEmitent: String = loadEmissionListData().map({ $0.emitentNameRus }).removingDuplicates().sorted()[0]
+    @EnvironmentObject var userData: UserData
     
-    var emitents: [String] {
-        loadEmissionListData().map({ $0.emitentNameRus }).removingDuplicates().sorted()
+    @Binding var filterType: FilterType
+    @Binding var filter: String
+    
+    @State var preFilterType: FilterType
+    @State var preFilter: String
+    
+    init(filterType: Binding<FilterType>, filter: Binding<String>) {
+        self._filterType = filterType
+        self._filter = filter
+        
+        self._preFilterType = State(initialValue: filterType.wrappedValue)
+        self._preFilter = State(initialValue: filter.wrappedValue)
     }
     
     var body: some View {
-        //  фильтр по эмитенту
         NavigationView {
             Form {
-                Section(header: Text("Эмитент".uppercased())
+                Section(header: Text("Варианты".uppercased())
                 ){
-                    Picker(selection: $preFilter, label: Text("")//Фильтр по эмитенту")
-                    ){
-                        ForEach(emitents, id: \.self){ name in
-                            Text(name).tag(name)
+                    Picker(selection: $preFilterType, label: Text("")) {
+                        ForEach(FilterType.allCases, id: \.self) { type in
+                            Text(type.rawValue).tag(type)
                         }
                     }
-                    .pickerStyle(WheelPickerStyle())
                 }
                 
-                Section(header: Text("Дополнительно".uppercased())
-                ){
+                if preFilterType == FilterType.byText {
                     
-                    //  MARK: - TODO do it
-                    Toggle(isOn: .constant(true)) {
-                        Text("TBD: Только выпуски с потоками").foregroundColor(.systemRed)
+                    Section(footer: Text("такой поиск занимает время")
+                    ){
+                        
+                        TextField("Фильтр по названию выпуска, ISIN",
+                                  text: $preFilter,
+                                  onEditingChanged: { isEdited in
+                        },
+                                  onCommit:
+                            {
+                        })
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                    }
+                } else if preFilterType == FilterType.emitent {
+                    
+                    Section(header: Text("Эмитент".uppercased())
+                    ){
+                        Picker(selection: $preFilter, label: Text("")//Фильтр по эмитенту")
+                        ){
+                            ForEach(userData.emitents, id: \.self){ name in
+                                Text(name).tag(name)
+                            }
+                        }
                     }
                 }
             }
                 
+                
             .navigationBarTitle("Фильтр")
                 
             .navigationBarItems(trailing: Button(action: {
-                //  MARK: - add actions
-                //                print("filter: " + self.filter)
-                //                print("selectedEmitent: " + self.selectedEmitent)
-                //                self.filter = self.selectedEmitent
                 self.presentation.wrappedValue.dismiss()
+                self.filterType = self.preFilterType
                 self.filter = self.preFilter
-                
-                //                print("filter: " + self.filter)
-                //                print("selectedEmitent: " + self.selectedEmitent)
-                
             }) {
                 Text("Закрыть")
             })
@@ -66,7 +83,8 @@ struct EmitentFilter: View {
 
 struct EmitentFilter_Previews: PreviewProvider {
     static var previews: some View {
-        EmitentFilter(filter: .constant(""),
-                      preFilter: .constant(""))
+        EmitentFilter(filterType: .constant(FilterType.byText),
+                      filter: .constant(""))
+            .environmentObject(UserData())
     }
 }

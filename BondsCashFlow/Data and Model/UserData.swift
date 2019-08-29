@@ -15,6 +15,10 @@ final class UserData: ObservableObject {
     
     @Published var emissions = emissionListData
     
+    var emitents: [String] {
+        emissions.map { $0.emitentNameRus }.removingDuplicates()
+    }
+    
     @Published var flows = cashFlowListData
     
     @Published var favoriteEmissions: [Int: Bool] = favoriteEmissionsData {

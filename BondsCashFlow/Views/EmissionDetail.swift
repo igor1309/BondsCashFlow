@@ -37,14 +37,14 @@ struct EmissionDetail: View {
     }
     
     var body: some View {
-//        isFavorite = userData.favoriteEmissions[emission.id] ?? false
         
-        return NavigationView {
+        NavigationView {
             VStack(alignment: .leading) {
                 EmissionSubRow(emission: emission, bigStar: true)
                     .padding()
                     .onTapGesture {
                         self.isFavorite.toggle()
+                        //  MARK: TODO haptic feedback
                 }
                 
                 Text("Потоки")
